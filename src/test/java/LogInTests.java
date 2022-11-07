@@ -8,10 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LogInTests {
 
@@ -107,7 +112,7 @@ public class LogInTests {
     public void testEmptyPassword() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("automation35", "");
+        performLogIn("automation36", "");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -118,4 +123,24 @@ public class LogInTests {
         performLogIn("automation35", "CCAutoTest19.");
     }
 
+
+    @Test
+    public void testLogInWithCaptcha() {
+        driver.get("https://jira-auto.codecool.metastage.net");
+
+        for (int i=0; i<3; i++) {
+            driver.navigate().refresh();
+            performLogIn("automation39", "password123");
+        }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+
+        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
+
+        assertEquals("Sorry, your userid is required to answer a CAPTCHA question correctly.", alertMessage);
+
+        WebElement captchaInputField = driver.findElement(By.id("login-form-captcha"));
+        assertTrue(captchaInputField.isDisplayed());
+    }
 }
