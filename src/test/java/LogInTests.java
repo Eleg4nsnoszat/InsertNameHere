@@ -17,6 +17,17 @@ public class LogInTests {
 
     public WebDriver driver;
 
+    public void performLogIn(String username, String password) {
+
+        WebElement usernameField = driver.findElement(By.id("login-form-username"));
+        WebElement passwordField = driver.findElement(By.id("login-form-password"));
+        WebElement logInButton = driver.findElement(By.id("login"));
+
+        usernameField.sendKeys(username);
+        passwordField.sendKeys(password);
+        logInButton.click();
+    }
+
     @BeforeAll
     public static void setDriver() {
         WebDriverManager.chromedriver().setup();
@@ -36,13 +47,7 @@ public class LogInTests {
     public void testSuccessfulLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        WebElement usernameField = driver.findElement(By.id("login-form-username"));
-        WebElement passwordField = driver.findElement(By.id("login-form-password"));
-        WebElement logInButton = driver.findElement(By.id("login"));
-
-        usernameField.sendKeys("automation35");
-        passwordField.sendKeys("CCAutoTest19.");
-        logInButton.click();
+        performLogIn("automation35", "CCAutoTest19.");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -51,4 +56,20 @@ public class LogInTests {
 
         assertEquals("automation35", loggedInUsername);
     }
+
+    @Test
+    public void testIncorrectUsername() {
+        driver.get("https://jira-auto.codecool.metastage.net");
+
+        performLogIn("username123", "CCAutoTest19.");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+
+        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
+
+        assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
+    }
+
+
 }
