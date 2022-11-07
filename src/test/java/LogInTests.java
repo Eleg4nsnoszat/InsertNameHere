@@ -86,4 +86,20 @@ public class LogInTests {
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
         testSuccessfulLogIn();
     }
+
+
+    @Test
+    public void testEmptyFields() {
+        driver.get("https://jira-auto.codecool.metastage.net");
+
+        performLogIn("", "");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+
+        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
+
+        assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
+    }
+
 }
