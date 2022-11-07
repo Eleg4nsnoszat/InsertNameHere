@@ -139,4 +139,23 @@ public class LogInTests {
         WebElement captchaInputField = driver.findElement(By.id("login-form-captcha"));
         assertTrue(captchaInputField.isDisplayed());
     }
+
+
+    @Test
+    public void testLogOut() {
+        driver.get("https://jira-auto.codecool.metastage.net");
+
+        performLogIn("automation35", "CCAutoTest19.");
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+
+        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        userProfile.click();
+
+        WebElement logOutOption = driver.findElement(By.id("log_out"));
+        logOutOption.click();
+
+        WebElement logOutMessage = driver.findElement(By.className("title"));
+        assertEquals("You are now logged out. Any automatic login has also been stopped.", logOutMessage.getText());
+    }
 }
