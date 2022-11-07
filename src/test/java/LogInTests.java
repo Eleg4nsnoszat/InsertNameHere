@@ -84,7 +84,7 @@ public class LogInTests {
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
-        testSuccessfulLogIn();
+        performLogIn("automation35", "CCAutoTest19.");
     }
 
 
