@@ -29,6 +29,15 @@ public class LogInTests {
         logInButton.click();
     }
 
+    public void performLogOut() {
+        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        userProfile.click();
+
+        WebElement logOutOption = driver.findElement(By.id("log_out"));
+        logOutOption.click();
+    }
+
+
     @BeforeAll
     public static void setDriver() {
         WebDriverManager.chromedriver().setup();
@@ -56,6 +65,7 @@ public class LogInTests {
         String loggedInUsername = userProfile.getAttribute("data-username");
 
         assertEquals("automation35", loggedInUsername);
+        performLogOut();
     }
 
     @Test
@@ -86,6 +96,7 @@ public class LogInTests {
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
         performLogIn("automation35", "CCAutoTest19.");
+        performLogOut();
     }
 
 
@@ -116,7 +127,8 @@ public class LogInTests {
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
-        performLogIn("automation35", "CCAutoTest19.");
+        performLogIn("automation36", "CCAutoTest19.");
+        performLogOut();
     }
 
 
@@ -149,11 +161,7 @@ public class LogInTests {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
-        userProfile.click();
-
-        WebElement logOutOption = driver.findElement(By.id("log_out"));
-        logOutOption.click();
+        performLogOut();
 
         WebElement logOutMessage = driver.findElement(By.className("title"));
         assertEquals("You are now logged out. Any automatic login has also been stopped.", logOutMessage.getText());
