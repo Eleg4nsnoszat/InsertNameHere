@@ -68,4 +68,36 @@ public class BrowseProjectsTest {
         String mtpText = isLoaded.getText();
         assertEquals("MTP", mtpText);
     }
+
+    @Test
+    public void BrowseNonExistingProjectTest(){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/DUCK/summary");
+        WebElement nonExistingProjectPage = driver.findElement(By.xpath("//*[@id=\"main\"]/h1"));
+        assertEquals("You can't view this project",nonExistingProjectPage.getText());
+    }
+
+    @Test
+    public void CheckCOALAProjectDetailsTest(){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/COALA/summary");
+        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
+        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
+        assertEquals("COALA", detailDropdownId.getText());
+    }
+
+    @Test
+    public void CheckTOUCANProjectDetailsTest(){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/TOUCAN/summary");
+        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
+        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
+        assertEquals("TOUCAN", detailDropdownId.getText());
+    }
+
+    @Test
+    public void CheckJETIProjectDetailsTest(){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/JETI/summary");
+        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
+        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
+        assertEquals("JETI", detailDropdownId.getText());
+    }
+
 }
