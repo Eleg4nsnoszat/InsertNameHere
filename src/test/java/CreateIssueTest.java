@@ -48,7 +48,7 @@ public class CreateIssueTest {
 
     public void preConditionLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
-        performLogIn("automation35", "CCAutoTest19.");
+        performLogIn("automation37", "CCAutoTest19.");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
     }
 
@@ -164,6 +164,14 @@ public class CreateIssueTest {
         validateIssueBase("TOUCAN test issue summary");
         deleteIssue();
     }
+
+    @Test
+    public void createIssueTOUCANSubtaskTest(){
+        createIssueBase("TOUCAN project (TOUCAN)","Task","TOUCAN test issue summary");
+        createSubtask("TOUCAN test subtask summary");
+        validateSubtask("TOUCAN test subtask summary");
+        deleteIssue();
+    }
     // JETI TEST
     @Test
     public void createIssueJETIBugTest(){
@@ -183,6 +191,14 @@ public class CreateIssueTest {
     public void createIssueJETIStoryTest(){
         createIssueBase("JETI project (JETI)","Story","JETI test issue summary");
         validateIssueBase("JETI test issue summary");
+        deleteIssue();
+    }
+
+    @Test
+    public void createIssueJETISubtaskTest(){
+        createIssueBase("JETI project (JETI)","Task","JETI test issue summary");
+        createSubtask("JETI test subtask summary");
+        validateSubtask("JETI test subtask summary");
         deleteIssue();
     }
 
@@ -207,6 +223,14 @@ public class CreateIssueTest {
     public void createIssueCOALAStoryTest(){
         createIssueBase("COALA project (COALA)","Story","COALA test issue summary");
         validateIssueBase("COALA test issue summary");
+        deleteIssue();
+    }
+
+    @Test
+    public void createIssueCOALASubtaskTest(){
+        createIssueBase("COALA project (COALA)","Task","COALA test issue summary");
+        createSubtask("COALA test subtask summary");
+        validateSubtask("COALA test subtask summary");
         deleteIssue();
     }
 
