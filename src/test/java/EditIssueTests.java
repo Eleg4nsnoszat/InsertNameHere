@@ -11,8 +11,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EditIssueTests {
 
@@ -36,7 +39,6 @@ public class EditIssueTests {
     @BeforeEach
     public void setUp(){
         driver = new ChromeDriver();
-        preConditionLogIn();
     }
 
     @AfterEach
@@ -48,14 +50,23 @@ public class EditIssueTests {
         driver.quit();
     }
 
-    public void preConditionLogIn(){
+    public void preConditionLogIn(String username){
         driver.get("https://jira-auto.codecool.metastage.net");
-        performLogIn("automation39","CCAutoTest19.");
+        performLogIn(username,"CCAutoTest19.");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
     }
 
+    public void checkIfEditButtonDisplayed(String url, String userName){
+        preConditionLogIn(userName);
+        driver.navigate().to(url);
+        WebElement editButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-issue")));
+        assertTrue(editButton.isDisplayed());
+    }
+
+
     @Test
     public void editIssueTest() {
+        preConditionLogIn("automation35");
         Actions actions = new Actions(driver);
 
         // Find and click on Create button on the menubar
@@ -114,6 +125,7 @@ public class EditIssueTests {
 
     @Test
     public void cancelIssueTest(){
+        preConditionLogIn("automation35");
         driver.navigate().to("https://jira-auto.codecool.metastage.net/browse/MTP-2686?filter=-2");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue"))).click();
         WebElement summaryEditField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
@@ -126,6 +138,20 @@ public class EditIssueTests {
         alert.accept();
         WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary-val")));
         assertEquals("Big-sub", summaryField.getText());
+    }
 
+    @Test
+    public void editCOALAIssueTest(){
+        checkIfEditButtonDisplayed("https://jira-auto.codecool.metastage.net/projects/COALA/issues/COALA-180?filter=allissues","automation35");
+    }
+
+    @Test
+    public void editTOUCANIssueTest(){
+        checkIfEditButtonDisplayed("https://jira-auto.codecool.metastage.net/projects/TOUCAN/issues/TOUCAN-239?filter=allissues","automation35");
+    }
+
+    @Test
+    public void editJETIIssueTest(){
+        checkIfEditButtonDisplayed("https://jira-auto.codecool.metastage.net/projects/JETI/issues/JETI-123?filter=allissues","automation35");
     }
 }
