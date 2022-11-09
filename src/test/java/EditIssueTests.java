@@ -40,11 +40,8 @@ public class EditIssueTests {
     }
 
     @AfterEach
-    public void quit(){
-//        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
-//        userProfile.click();
-//        WebElement logOutOption = driver.findElement(By.id("log_out"));
-//        logOutOption.click();
+    public void quit() {
+        logOut();
         driver.quit();
     }
 
@@ -59,6 +56,13 @@ public class EditIssueTests {
         driver.navigate().to(url);
         WebElement editButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-issue")));
         assertTrue(editButton.isDisplayed());
+    }
+
+    public void logOut() {
+        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        userProfile.click();
+        WebElement logOutOption = driver.findElement(By.id("log_out"));
+        logOutOption.click();
     }
 
 
