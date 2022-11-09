@@ -108,8 +108,9 @@ public class CreateIssueTest {
         createButton.click();
     }
     public void validateSubtask(String subtaskSummary){
-        WebElement subtaskHeading = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='isseu-link']")));
-        assertEquals(subtaskSummary, subtaskHeading.getText());
+        By subtaskHeading = RelativeLocator.with(By.className("stsummary")).below(By.tagName("a"));
+        WebElement subtaskLink = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(subtaskHeading));
+        assertEquals(subtaskSummary, subtaskLink.getText());
     }
 
     //MTP TEST
