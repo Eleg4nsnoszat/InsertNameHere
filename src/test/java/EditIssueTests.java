@@ -57,54 +57,58 @@ public class EditIssueTests {
     @Test
     public void editIssueTest() {
         Actions actions = new Actions(driver);
-        WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
+
+        // Find and click on Create button on the menubar
+        WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
         createIssueButton.click();
 
-        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
-
-        WebElement projectField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        // Wait for the fields of the create issue modal to be useable
+        WebElement projectField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
         projectField.click();
         projectField.sendKeys("Main Testing Project (MTP)" + Keys.ENTER);
 
-        WebElement issueTypeField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        WebElement issueTypeField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
         issueTypeField.click();
         issueTypeField.sendKeys("Bug" + Keys.ENTER);
 
-        WebElement summaryField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
         summaryField.sendKeys("Bug in main testing project");
 
-        WebElement createButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+        WebElement createButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
         createButton.click();
 
-        WebElement createdIssueInfoModal = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='issue-created-key issue-link']")));
+        // Find and click on the link in the confirmation modal
+        WebElement createdIssueInfoModal = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='issue-created-key issue-link']")));
         createdIssueInfoModal.click();
 
-        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue"))).click();
+        // Find anc click on the edit issue button and perform the change of the summary text
+        new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue"))).click();
 
-        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
-
-        WebElement summaryEditField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryEditField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
         summaryEditField.click();
         summaryEditField.clear();
         summaryEditField.sendKeys("Big-sub");
 
-        WebElement updateIssueButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue-submit")));
+        WebElement updateIssueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue-submit")));
         updateIssueButton.click();
 
+        // Perform a page refresh
         driver.navigate().refresh();
         Alert alert = driver.switchTo().alert();
         alert.accept();
 
-        WebElement issueSummary = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("h1[id='summary-val']")));
+        // Check if the summary text remains the same after page refresh
+        WebElement issueSummary = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("h1[id='summary-val']")));
 
         assertEquals("Big-sub", issueSummary.getText());
 
-        WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
+        // Delete the created test issue
+        WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
         actions.moveToElement(moreButton).click().build().perform();
         By deleteOption = RelativeLocator.with(By.id("delete-issue")).below(By.tagName("a"));
-        WebElement deleteButton = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(deleteOption));
+        WebElement deleteButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(deleteOption));
         deleteButton.click();
-        WebElement confirmDeleteButton = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
+        WebElement confirmDeleteButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
         confirmDeleteButton.click();
     }
 
