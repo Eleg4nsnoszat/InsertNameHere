@@ -53,37 +53,38 @@ public class CreateIssueTest {
     }
 
 
-    public void createIssueBase(String projectName, String issueType, String issueSummary){
+    public void createIssueBase(String projectName, String issueType, String issueSummary) {
         Actions actions = new Actions(driver);
 
         // Find and click on Create button on the menubar
-        WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
+        WebElement createIssueButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
         createIssueButton.click();
 
         // Wait for the fields of the create issue modal to be useable
-        WebElement projectField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        WebElement projectField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
         projectField.click();
         projectField.sendKeys(projectName + Keys.ENTER);
 
-        WebElement issueTypeField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        WebElement issueTypeField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
         issueTypeField.click();
         issueTypeField.sendKeys(issueType + Keys.ENTER);
 
-        WebElement summaryField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
         summaryField.sendKeys(issueSummary);
 
-        WebElement createButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+        WebElement createButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
         createButton.click();
 
         // Find and click on the link in the confirmation modal
-        WebElement createdIssueInfoModal = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='issue-created-key issue-link']")));
+        WebElement createdIssueInfoModal = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='issue-created-key issue-link']")));
         createdIssueInfoModal.click();
-
-        // Validate that the issue is created
+    }
+    public void validateIssueBase(String issueSummary) {
         WebElement issueSummaryTheSame = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("h1[id='summary-val']")));
         assertEquals(issueSummary, issueSummaryTheSame.getText());
-
-        // Delete the created test issue
+    }
+    public void deleteIssue() {
+        Actions actions = new Actions(driver);
         WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
         actions.moveToElement(moreButton).click().build().perform();
         By deleteOption = RelativeLocator.with(By.id("delete-issue")).below(By.tagName("a"));
@@ -92,50 +93,96 @@ public class CreateIssueTest {
         WebElement confirmDeleteButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
         confirmDeleteButton.click();
     }
+
+    public void createSubtask(String subtaskSummary){
+        Actions actions = new Actions(driver);
+        WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
+        actions.moveToElement(moreButton).click().build().perform();
+        By subtaskOption = RelativeLocator.with(By.id("create-subtask")).below(By.tagName("a"));
+        WebElement subtaskButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(subtaskOption));
+        subtaskButton.click();
+        WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        summaryField.sendKeys(subtaskSummary);
+
+        WebElement createButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+        createButton.click();
+    }
+    public void validateSubtask(String subtaskSummary){
+        WebElement subtaskHeading = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='isseu-link']")));
+        assertEquals(subtaskSummary, subtaskHeading.getText());
+    }
+
     //MTP TEST
     @Test
     public void createIssueMTPBugTest(){
         createIssueBase("Main Testing Project (MTP)","Bug","MTP test issue summary");
+        validateIssueBase("MTP test issue summary");
+        deleteIssue();
     }
+
 
     @Test
     public void createIssueMTPTaskTest(){
         createIssueBase("Main Testing Project (MTP)","Task","MTP test issue summary");
+        validateIssueBase("MTP test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueMTPStoryTest(){
         createIssueBase("Main Testing Project (MTP)","Story","MTP test issue summary");
+        validateIssueBase("MTP test issue summary");
+        deleteIssue();
+    }
+
+    @Test
+    public void createIssueMTPSubtaskTest(){
+        createIssueBase("Main Testing Project (MTP)","Task","MTP test issue summary");
+        createSubtask("MTP test subtask summary");
+        validateSubtask("MTP test subtask summary");
+        deleteIssue();
     }
     //TOUCAN TEST
     @Test
     public void createIssueTOUCANBugTest(){
         createIssueBase("TOUCAN project (TOUCAN)","Bug","TOUCAN test issue summary");
+        validateIssueBase("TOUCAN test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueTOUCANTaskTest(){
         createIssueBase("TOUCAN project (TOUCAN)","Task","TOUCAN test issue summary");
+        validateIssueBase("TOUCAN test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueTOUCANStoryTest(){
         createIssueBase("TOUCAN project (TOUCAN)","Story","TOUCAN test issue summary");
+        validateIssueBase("TOUCAN test issue summary");
+        deleteIssue();
     }
     // JETI TEST
     @Test
     public void createIssueJETIBugTest(){
         createIssueBase("JETI project (JETI)","Bug","JETI test issue summary");
+        validateIssueBase("JETI test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueJETITaskTest(){
         createIssueBase("JETI project (JETI)","Task","JETI test issue summary");
+        validateIssueBase("JETI test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueJETIStoryTest(){
         createIssueBase("JETI project (JETI)","Story","JETI test issue summary");
+        validateIssueBase("JETI test issue summary");
+        deleteIssue();
     }
 
     //COALA TEST
@@ -143,16 +190,23 @@ public class CreateIssueTest {
     @Test
     public void createIssueCOALABugTest(){
         createIssueBase("COALA project (COALA)","Bug","COALA test issue summary");
+        validateIssueBase("COALA test issue summary");
+        deleteIssue();
     }
 
     @Test
     public void createIssueCOALATaskTest(){
         createIssueBase("COALA project (COALA)","Task","COALA test issue summary");
+        validateIssueBase("COALA test issue summary");
+        deleteIssue();
     }
+
 
     @Test
     public void createIssueCOALAStoryTest(){
         createIssueBase("COALA project (COALA)","Story","COALA test issue summary");
+        validateIssueBase("COALA test issue summary");
+        deleteIssue();
     }
 
     @Test
