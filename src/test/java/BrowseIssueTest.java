@@ -45,10 +45,7 @@ public class BrowseIssueTest {
 
     @AfterEach
     public void quit() {
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
-        userProfile.click();
-        WebElement logOutOption = driver.findElement(By.id("log_out"));
-        logOutOption.click();
+        logOut();
         driver.quit();
     }
 
@@ -56,6 +53,13 @@ public class BrowseIssueTest {
         driver.get("https://jira-auto.codecool.metastage.net");
         performLogIn("automation39", "CCAutoTest19.");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
+    }
+
+    public void logOut() {
+        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        userProfile.click();
+        WebElement logOutOption = driver.findElement(By.id("log_out"));
+        logOutOption.click();
     }
 
     public String BrowseIssue(String projectName, String issueNumber){
