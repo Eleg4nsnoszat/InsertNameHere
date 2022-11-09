@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -63,6 +62,15 @@ public class BrowseProjectsTest {
         logOutOption.click();
     }
 
+
+    private void checkProjectSummaryPage(String projectName) {
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/" + projectName + "/summary");
+        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
+        WebElement projectKey = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
+        assertEquals(projectName, projectKey.getText());
+    }
+
+
     @Test
     public void BrowseMTPProjectTest(){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/MTP/summary");
@@ -80,26 +88,18 @@ public class BrowseProjectsTest {
 
     @Test
     public void CheckCOALAProjectDetailsTest(){
-        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/COALA/summary");
-        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
-        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
-        assertEquals("COALA", detailDropdownId.getText());
+        checkProjectSummaryPage("COALA");
     }
+
 
     @Test
     public void CheckTOUCANProjectDetailsTest(){
-        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/TOUCAN/summary");
-        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
-        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
-        assertEquals("TOUCAN", detailDropdownId.getText());
+        checkProjectSummaryPage("TOUCAN");
     }
 
     @Test
     public void CheckJETIProjectDetailsTest(){
-        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/JETI/summary");
-        new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")));
-        WebElement detailDropdownId = driver.findElement(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]"));
-        assertEquals("JETI", detailDropdownId.getText());
+        checkProjectSummaryPage("JETI");
     }
 
 }
