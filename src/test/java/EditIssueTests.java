@@ -3,10 +3,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.locators.RelativeLocator;
@@ -58,7 +55,7 @@ public class EditIssueTests {
     }
 
     @Test
-    public void CreateIssueTest(){
+    public void CreateIssueTest() {
         Actions actions = new Actions(driver);
         WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
         createIssueButton.click();
@@ -95,8 +92,8 @@ public class EditIssueTests {
         updateIssueButton.click();
 
         driver.navigate().refresh();
-
-//        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue")));
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
 
         WebElement issueSummary = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("h1[id='summary-val']")));
 
