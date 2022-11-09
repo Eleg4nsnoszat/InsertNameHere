@@ -72,7 +72,7 @@ public class BrowseProjectsTest {
 
 
     @Test
-    public void BrowseMTPProjectTest(){
+    public void browseMTPProjectTest(){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/MTP/summary");
         List<WebElement> projectMetaData = driver.findElements(By.className("project-meta-value"));
         String projectName = projectMetaData.get(1).getText();
@@ -80,25 +80,25 @@ public class BrowseProjectsTest {
     }
 
     @Test
-    public void BrowseNonExistingProjectTest(){
+    public void browseNonExistingProjectTest(){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/DUCK/summary");
         WebElement nonExistingProjectPage = driver.findElement(By.xpath("//*[@id=\"main\"]/h1"));
         assertEquals("You can't view this project",nonExistingProjectPage.getText());
     }
 
     @Test
-    public void CheckCOALAProjectDetailsTest(){
+    public void checkCOALAProjectDetailsTest(){
         checkProjectSummaryPage("COALA");
     }
 
 
     @Test
-    public void CheckTOUCANProjectDetailsTest(){
+    public void checkTOUCANProjectDetailsTest(){
         checkProjectSummaryPage("TOUCAN");
     }
 
     @Test
-    public void CheckJETIProjectDetailsTest(){
+    public void checkJETIProjectDetailsTest(){
         checkProjectSummaryPage("JETI");
     }
 

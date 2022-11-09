@@ -62,14 +62,14 @@ public class BrowseIssueTest {
         logOutOption.click();
     }
 
-    public String BrowseIssue(String projectName, String issueNumber){
+    public String browseIssue(String projectName, String issueNumber){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/browse/"+projectName+"-"+issueNumber);
         new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("key-val")));
         WebElement issueId = driver.findElement(By.id("key-val"));
         return issueId.getText();
     }
 
-    public String BrowseProjectIssues(String projectName,String issueNumber){
+    public String browseProjectIssues(String projectName, String issueNumber){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/MTP/issues/"+projectName+"-"+issueNumber+"?filter=allissues");
         new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("key-val")));
         WebElement issueId = driver.findElement(By.id("key-val"));
@@ -77,33 +77,33 @@ public class BrowseIssueTest {
     }
 
     @Test
-    public void BrowseExistingIssueTest(){
-        assertEquals("MTP-1",BrowseProjectIssues("MTP","1"));
+    public void browseExistingIssueTest(){
+        assertEquals("MTP-1", browseProjectIssues("MTP","1"));
     }
 
     @Test
-    public void BrowseNonExistingIssueTest(){
-        assertNotEquals("MTP-0",BrowseProjectIssues("MTP","0"));
+    public void browseNonExistingIssueTest(){
+        assertNotEquals("MTP-0", browseProjectIssues("MTP","0"));
     }
 
     @Test
-    public void BrowseTOUCANIssueTest() {
-        assertEquals("TOUCAN-1", BrowseIssue("TOUCAN","1"));
-        assertEquals("TOUCAN-2",BrowseIssue("TOUCAN","2"));
-        assertEquals("TOUCAN-3",BrowseIssue("TOUCAN","3"));
+    public void browseTOUCANIssueTest() {
+        assertEquals("TOUCAN-1", browseIssue("TOUCAN","1"));
+        assertEquals("TOUCAN-2", browseIssue("TOUCAN","2"));
+        assertEquals("TOUCAN-3", browseIssue("TOUCAN","3"));
     }
 
     @Test
-    public void BrowseJETIIssueTest() {
-        assertEquals("JETI-1", BrowseIssue("JETI","1"));
-        assertEquals("JETI-2",BrowseIssue("JETI","2"));
-        assertEquals("JETI-3",BrowseIssue("JETI","3"));
+    public void browseJETIIssueTest() {
+        assertEquals("JETI-1", browseIssue("JETI","1"));
+        assertEquals("JETI-2", browseIssue("JETI","2"));
+        assertEquals("JETI-3", browseIssue("JETI","3"));
     }
 
     @Test
-    public void BrowseCOALAIssueTest() {
-        assertEquals("COALA-1", BrowseIssue("COALA","1"));
-        assertEquals("COALA-2",BrowseIssue("COALA","2"));
-        assertEquals("COALA-3",BrowseIssue("COALA","3"));
+    public void browseCOALAIssueTest() {
+        assertEquals("COALA-1", browseIssue("COALA","1"));
+        assertEquals("COALA-2", browseIssue("COALA","2"));
+        assertEquals("COALA-3", browseIssue("COALA","3"));
     }
 }
