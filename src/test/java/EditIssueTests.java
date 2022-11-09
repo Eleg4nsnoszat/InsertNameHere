@@ -107,4 +107,22 @@ public class EditIssueTests {
         WebElement confirmDeleteButton = new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
         confirmDeleteButton.click();
     }
+
+    @Test
+    public void cancelIssueTest(){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/browse/MTP-2686?filter=-2");
+        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue"))).click();
+        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryEditField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        summaryEditField.click();
+        summaryEditField.clear();
+        summaryEditField.sendKeys("Edited-sub");
+        WebElement updateIssueButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='aui-button aui-button-link cancel']")));
+        updateIssueButton.click();
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+        WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary-val")));
+        assertEquals("Big-sub", summaryField.getText());
+
+    }
 }
