@@ -55,7 +55,7 @@ public class EditIssueTests {
     }
 
     @Test
-    public void CreateIssueTest() {
+    public void editIssueTest() {
         Actions actions = new Actions(driver);
         WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
         createIssueButton.click();
