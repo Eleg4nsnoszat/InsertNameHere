@@ -46,10 +46,7 @@ public class BrowseProjectsTest {
 
     @AfterEach
     public void quit(){
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
-        userProfile.click();
-        WebElement logOutOption = driver.findElement(By.id("log_out"));
-        logOutOption.click();
+        logOut();
         driver.quit();
     }
 
@@ -59,6 +56,12 @@ public class BrowseProjectsTest {
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
     }
 
+    public void logOut() {
+        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        userProfile.click();
+        WebElement logOutOption = driver.findElement(By.id("log_out"));
+        logOutOption.click();
+    }
 
     @Test
     public void BrowseMTPProjectTest(){
