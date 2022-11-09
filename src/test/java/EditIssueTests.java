@@ -116,7 +116,6 @@ public class EditIssueTests {
     public void cancelIssueTest(){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/browse/MTP-2686?filter=-2");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("edit-issue"))).click();
-        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
         WebElement summaryEditField = new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
         summaryEditField.click();
         summaryEditField.clear();
