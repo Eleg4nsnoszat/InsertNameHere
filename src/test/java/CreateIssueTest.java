@@ -6,14 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.locators.RelativeLocator;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class CreateIssueTest {
 
@@ -43,73 +37,70 @@ public class CreateIssueTest {
 
     @AfterEach
     public void quit() {
+        Util.logOut(driver);
         driver.quit();
     }
 
     public void preConditionLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
         performLogIn("automation37", "CCAutoTest19.");
-        new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
+        Util.lookUpWebElementWithWait(driver, "#header-details-user-fullname");
     }
 
 
     public void createIssueBase(String projectName, String issueType, String issueSummary) {
-        Actions actions = new Actions(driver);
-
         // Find and click on Create button on the menubar
-        WebElement createIssueButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
+        WebElement createIssueButton = Util.lookUpWebElementWithWait(driver, "#create_link");
         createIssueButton.click();
 
-        // Wait for the fields of the create issue modal to be useable
-        WebElement projectField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        // Wait for the fields of the create issue modal to be usable
+        WebElement projectField = Util.lookUpWebElementWithWait(driver, "#project-field");
         projectField.click();
         projectField.sendKeys(projectName + Keys.ENTER);
 
-        WebElement issueTypeField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        WebElement issueTypeField = Util.lookUpWebElementWithWait(driver, "#issuetype-field");
         issueTypeField.click();
         issueTypeField.sendKeys(issueType + Keys.ENTER);
 
-        WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryField = Util.lookUpWebElementWithWait(driver, "#summary");
         summaryField.sendKeys(issueSummary);
 
-        WebElement createButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+        WebElement createButton = Util.lookUpWebElementWithWait(driver, "#create-issue-submit");
         createButton.click();
 
         // Find and click on the link in the confirmation modal
-        WebElement createdIssueInfoModal = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class='issue-created-key issue-link']")));
+        WebElement createdIssueInfoModal = Util.lookUpWebElementWithWait(driver, "a[class='issue-created-key issue-link']");
         createdIssueInfoModal.click();
     }
+
     public void validateIssueBase(String issueSummary) {
-        WebElement issueSummaryTheSame = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("h1[id='summary-val']")));
+        WebElement issueSummaryTheSame = Util.lookUpWebElementWithWait(driver, "h1[id='summary-val']");
         assertEquals(issueSummary, issueSummaryTheSame.getText());
     }
     public void deleteIssue() {
         Actions actions = new Actions(driver);
-        WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
+        WebElement moreButton = Util.lookUpWebElementWithWait(driver, "#opsbar-operations_more");
         actions.moveToElement(moreButton).click().build().perform();
-        By deleteOption = RelativeLocator.with(By.id("delete-issue")).below(By.tagName("a"));
-        WebElement deleteButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(deleteOption));
+        WebElement deleteButton = Util.lookUpWebElementWithWait(driver, Util.lookUpWebElementByRelativeLocator("#delete-issue", "a"));
         deleteButton.click();
-        WebElement confirmDeleteButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("delete-issue-submit")));
+        WebElement confirmDeleteButton = Util.lookUpWebElementWithWait(driver, "#delete-issue-submit");
         confirmDeleteButton.click();
     }
 
     public void createSubtask(String subtaskSummary){
         Actions actions = new Actions(driver);
-        WebElement moreButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("opsbar-operations_more")));
+        WebElement moreButton = Util.lookUpWebElementWithWait(driver, "#opsbar-operations_more");
         actions.moveToElement(moreButton).click().build().perform();
-        By subtaskOption = RelativeLocator.with(By.id("create-subtask")).below(By.tagName("a"));
-        WebElement subtaskButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(subtaskOption));
+        WebElement subtaskButton = Util.lookUpWebElementWithWait(driver, Util.lookUpWebElementByRelativeLocator("#create-subtask", "a"));
         subtaskButton.click();
-        WebElement summaryField = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryField = Util.lookUpWebElementWithWait(driver, "#summary");
         summaryField.sendKeys(subtaskSummary);
 
-        WebElement createButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+        WebElement createButton = Util.lookUpWebElementWithWait(driver, "#create-issue-submit");
         createButton.click();
     }
     public void validateSubtask(String subtaskSummary){
-        By subtaskHeading = RelativeLocator.with(By.className("stsummary")).below(By.tagName("a"));
-        WebElement subtaskLink = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(subtaskHeading));
+        WebElement subtaskLink = Util.lookUpWebElementWithWait(driver, Util.lookUpWebElementByRelativeLocator(".stsummary", "a"));
         assertEquals(subtaskSummary, subtaskLink.getText());
     }
 
@@ -236,26 +227,24 @@ public class CreateIssueTest {
 
     @Test
     public void cancelIssueTest(){
-        Actions actions = new Actions(driver);
-
         // Find and click on Create button on the menubar
-        WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
+        WebElement createIssueButton = Util.lookUpWebElementWithWait(driver, "#create_link");
         createIssueButton.click();
 
-        // Wait for the fields of the create issue modal to be useable
-        WebElement projectField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        // Wait for the fields of the create issue modal to be usable
+        WebElement projectField = Util.lookUpWebElementWithWait(driver, "#project-field");
         projectField.click();
         projectField.sendKeys("Main Testing Project (MTP)" + Keys.ENTER);
 
-        WebElement issueTypeField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        WebElement issueTypeField = Util.lookUpWebElementWithWait(driver, "#issuetype-field");
         issueTypeField.click();
         issueTypeField.sendKeys("Bug" + Keys.ENTER);
 
-        WebElement summaryField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        WebElement summaryField = Util.lookUpWebElementWithWait(driver, "#summary");
         summaryField.sendKeys("MTP test issue summary");
 
         // Find and click cancel button
-        WebElement cancelButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='aui-button aui-button-link cancel']")));
+        WebElement cancelButton = Util.lookUpWebElementWithWait(driver, "button[class='aui-button aui-button-link cancel']");
         cancelButton.click();
 
         // Handling Alert modal
@@ -263,11 +252,11 @@ public class CreateIssueTest {
         alert.accept();
 
         //Validate that no new issue is created
-        WebElement issueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("find_link")));
+        WebElement issueButton = Util.lookUpWebElementWithWait(driver, "#find_link");
         issueButton.click();
-        WebElement myOpenIssueButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("filter_lnk_reported_lnk")));
+        WebElement myOpenIssueButton = Util.lookUpWebElementWithWait(driver, "#filter_lnk_reported_lnk");
         myOpenIssueButton.click();
-        WebElement summaryFieldCheck = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary-val")));
+        WebElement summaryFieldCheck = Util.lookUpWebElementWithWait(driver, "#summary-val");
         assertTrue(summaryFieldCheck.isDisplayed(), "MTP test issue summary");
     }
 }
