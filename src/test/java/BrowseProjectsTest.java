@@ -7,10 +7,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,9 +63,9 @@ public class BrowseProjectsTest {
     @Test
     public void BrowseMTPProjectTest(){
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/MTP/summary");
-        WebElement isLoaded =  new WebDriverWait(driver,Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"summary-body\"]/div/div[2]/dl/dd[3]")));
-        String mtpText = isLoaded.getText();
-        assertEquals("MTP", mtpText);
+        List<WebElement> projectMetaData = driver.findElements(By.className("project-meta-value"));
+        String projectName = projectMetaData.get(1).getText();
+        assertEquals("MTP", projectName);
     }
 
     @Test
