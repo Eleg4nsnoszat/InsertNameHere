@@ -3,10 +3,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.locators.RelativeLocator;
@@ -15,9 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CreateIssueTest {
@@ -53,7 +48,7 @@ public class CreateIssueTest {
 
     public void preConditionLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
-        performLogIn("automation39", "CCAutoTest19.");
+        performLogIn("automation35", "CCAutoTest19.");
         new WebDriverWait(driver, Duration.ofMillis(5000)).until(ExpectedConditions.elementToBeClickable(By.id("header-details-user-fullname")));
     }
 
@@ -158,5 +153,42 @@ public class CreateIssueTest {
     @Test
     public void createIssueCOALAStoryTest(){
         createIssueBase("COALA project (COALA)","Story","COALA test issue summary");
+    }
+
+    @Test
+    public void cancelIssueTest(){
+        Actions actions = new Actions(driver);
+
+        // Find and click on Create button on the menubar
+        WebElement createIssueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("create_link")));
+        createIssueButton.click();
+
+        // Wait for the fields of the create issue modal to be useable
+        WebElement projectField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("project-field")));
+        projectField.click();
+        projectField.sendKeys("Main Testing Project (MTP)" + Keys.ENTER);
+
+        WebElement issueTypeField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        issueTypeField.click();
+        issueTypeField.sendKeys("Bug" + Keys.ENTER);
+
+        WebElement summaryField = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary")));
+        summaryField.sendKeys("MTP test issue summary");
+
+        // Find and click cancel button
+        WebElement cancelButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='aui-button aui-button-link cancel']")));
+        cancelButton.click();
+
+        // Handling Alert modal
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+
+        //Validate that no new issue is created
+        WebElement issueButton = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("find_link")));
+        issueButton.click();
+        WebElement myOpenIssueButton = new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("filter_lnk_reported_lnk")));
+        myOpenIssueButton.click();
+        WebElement summaryFieldCheck = new WebDriverWait(driver,Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(By.id("summary-val")));
+        assertTrue(summaryFieldCheck.isDisplayed(), "MTP test issue summary");
     }
 }
