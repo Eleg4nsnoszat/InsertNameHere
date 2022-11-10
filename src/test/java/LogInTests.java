@@ -40,9 +40,7 @@ public class LogInTests {
 
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        WebElement userProfile = Util.lookUpWebElementWithWait(driver, "#header-details-user-fullname");
         String loggedInUsername = userProfile.getAttribute("data-username");
 
         assertEquals("automation35", loggedInUsername);
@@ -54,9 +52,7 @@ public class LogInTests {
 
         Util.logInWithUser(driver, "username123", "CCAutoTest19.");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        WebElement alertMessageContainer = Util.lookUpWebElementWithWait(driver, "#usernameerror");
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
@@ -68,13 +64,13 @@ public class LogInTests {
 
         Util.logInWithUser(driver, "automation35", "password123");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        WebElement alertMessageContainer = Util.lookUpWebElementWithWait(driver, "#usernameerror");
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
+
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
         Util.logOut(driver);
     }
 
@@ -84,9 +80,7 @@ public class LogInTests {
 
         Util.logInWithUser(driver, "", "");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        WebElement alertMessageContainer = Util.lookUpWebElementWithWait(driver, "#usernameerror");
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
@@ -98,13 +92,13 @@ public class LogInTests {
 
         Util.logInWithUser(driver, "automation36", "");
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        WebElement alertMessageContainer = Util.lookUpWebElementWithWait(driver, "#usernameerror");
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
+
         Util.logInWithUser(driver, "automation36", "CCAutoTest19.");
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
         Util.logOut(driver);
     }
 
@@ -117,14 +111,12 @@ public class LogInTests {
             Util.logInWithUser(driver, "automation39", "password123");
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
-        WebElement alertMessageContainer = driver.findElement(By.id("usernameerror"));
+        WebElement alertMessageContainer = Util.lookUpWebElementWithWait(driver, "#usernameerror");
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your userid is required to answer a CAPTCHA question correctly.", alertMessage);
 
-        WebElement captchaInputField = driver.findElement(By.id("login-form-captcha"));
+        WebElement captchaInputField = Util.lookUpWebElementWithWait(driver, "#login-form-captcha");
         assertTrue(captchaInputField.isDisplayed());
     }
 
