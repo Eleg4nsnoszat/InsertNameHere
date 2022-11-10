@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -70,7 +68,6 @@ public class LogInTests {
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
 
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
         Util.logOut(driver);
     }
 
@@ -98,7 +95,6 @@ public class LogInTests {
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
 
         Util.logInWithUser(driver, "automation36", "CCAutoTest19.");
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
         Util.logOut(driver);
     }
 
@@ -125,9 +121,6 @@ public class LogInTests {
     public void testLogOut() {
 
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-
         Util.logOut(driver);
 
         WebElement logOutMessage = driver.findElement(By.className("title"));

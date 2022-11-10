@@ -42,7 +42,8 @@ public class Util {
     }
 
     public static void logOut(WebDriver driver) {
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+//        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
+        WebElement userProfile = lookUpWebElementWithWait(driver, "#header-details-user-fullname");
         Util.scrollToElement(driver, userProfile);
         userProfile.click();
         WebElement logOutOption = driver.findElement(By.id("log_out"));
