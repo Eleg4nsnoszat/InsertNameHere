@@ -27,6 +27,7 @@ public class LogInTests {
     @BeforeEach
     public void setup() {
         driver = new ChromeDriver();
+        driver.get("https://jira-auto.codecool.metastage.net");
     }
 
     @AfterEach
@@ -36,7 +37,6 @@ public class LogInTests {
 
     @Test
     public void testSuccessfulLogIn() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
 
@@ -51,7 +51,6 @@ public class LogInTests {
 
     @Test
     public void testIncorrectUsername() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "username123", "CCAutoTest19.");
 
@@ -66,7 +65,6 @@ public class LogInTests {
 
     @Test
     public void testIncorrectPassword() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "automation35", "password123");
 
@@ -83,7 +81,6 @@ public class LogInTests {
 
     @Test
     public void testEmptyFields() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "", "");
 
@@ -98,7 +95,6 @@ public class LogInTests {
 
     @Test
     public void testEmptyPassword() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "automation36", "");
 
@@ -115,7 +111,6 @@ public class LogInTests {
 
     @Test
     public void testLogInWithCaptcha() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         for (int i=0; i<3; i++) {
             driver.navigate().refresh();
@@ -136,7 +131,6 @@ public class LogInTests {
 
     @Test
     public void testLogOut() {
-        driver.get("https://jira-auto.codecool.metastage.net");
 
         Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
 
