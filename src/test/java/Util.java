@@ -42,7 +42,6 @@ public class Util {
     }
 
     public static void logOut(WebDriver driver) {
-//        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
         WebElement userProfile = lookUpWebElementWithWait(driver, "#header-details-user-fullname");
         Util.scrollToElement(driver, userProfile);
         userProfile.click();
