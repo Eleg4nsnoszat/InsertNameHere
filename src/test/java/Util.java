@@ -30,6 +30,17 @@ public class Util {
         jse.executeScript("arguments[0].scrollIntoView()", element);
     }
 
+    public static void logInWithUser(WebDriver driver, String username, String password) {
+
+        WebElement usernameField = driver.findElement(By.id("login-form-username"));
+        WebElement passwordField = driver.findElement(By.id("login-form-password"));
+        WebElement logInButton = driver.findElement(By.id("login"));
+
+        usernameField.sendKeys(username);
+        passwordField.sendKeys(password);
+        logInButton.click();
+    }
+
     public static void logOut(WebDriver driver) {
         WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
         Util.scrollToElement(driver, userProfile);

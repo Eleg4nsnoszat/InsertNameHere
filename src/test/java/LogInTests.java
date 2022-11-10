@@ -18,25 +18,6 @@ public class LogInTests {
 
     public WebDriver driver;
 
-    public void performLogIn(String username, String password) {
-
-        WebElement usernameField = driver.findElement(By.id("login-form-username"));
-        WebElement passwordField = driver.findElement(By.id("login-form-password"));
-        WebElement logInButton = driver.findElement(By.id("login"));
-
-        usernameField.sendKeys(username);
-        passwordField.sendKeys(password);
-        logInButton.click();
-    }
-
-    public void performLogOut() {
-        WebElement userProfile = driver.findElement(By.id("header-details-user-fullname"));
-        userProfile.click();
-
-        WebElement logOutOption = driver.findElement(By.id("log_out"));
-        logOutOption.click();
-    }
-
 
     @BeforeAll
     public static void setDriver() {
@@ -57,7 +38,7 @@ public class LogInTests {
     public void testSuccessfulLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("automation35", "CCAutoTest19.");
+        Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -65,14 +46,14 @@ public class LogInTests {
         String loggedInUsername = userProfile.getAttribute("data-username");
 
         assertEquals("automation35", loggedInUsername);
-        performLogOut();
+        Util.logOut(driver);
     }
 
     @Test
     public void testIncorrectUsername() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("username123", "CCAutoTest19.");
+        Util.logInWithUser(driver, "username123", "CCAutoTest19.");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -87,7 +68,7 @@ public class LogInTests {
     public void testIncorrectPassword() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("automation35", "password123");
+        Util.logInWithUser(driver, "automation35", "password123");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -95,8 +76,8 @@ public class LogInTests {
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
-        performLogIn("automation35", "CCAutoTest19.");
-        performLogOut();
+        Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
+        Util.logOut(driver);
     }
 
 
@@ -104,7 +85,7 @@ public class LogInTests {
     public void testEmptyFields() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("", "");
+        Util.logInWithUser(driver, "", "");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -119,7 +100,7 @@ public class LogInTests {
     public void testEmptyPassword() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("automation36", "");
+        Util.logInWithUser(driver, "automation36", "");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
@@ -127,8 +108,8 @@ public class LogInTests {
         String alertMessage = alertMessageContainer.findElement(By.tagName("p")).getText();
 
         assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
-        performLogIn("automation36", "CCAutoTest19.");
-        performLogOut();
+        Util.logInWithUser(driver, "automation36", "CCAutoTest19.");
+        Util.logOut(driver);
     }
 
 
@@ -138,7 +119,7 @@ public class LogInTests {
 
         for (int i=0; i<3; i++) {
             driver.navigate().refresh();
-            performLogIn("automation39", "password123");
+            Util.logInWithUser(driver, "automation39", "password123");
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
@@ -157,11 +138,11 @@ public class LogInTests {
     public void testLogOut() {
         driver.get("https://jira-auto.codecool.metastage.net");
 
-        performLogIn("automation35", "CCAutoTest19.");
+        Util.logInWithUser(driver, "automation35", "CCAutoTest19.");
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
-        performLogOut();
+        Util.logOut(driver);
 
         WebElement logOutMessage = driver.findElement(By.className("title"));
         assertEquals("You are now logged out. Any automatic login has also been stopped.", logOutMessage.getText());

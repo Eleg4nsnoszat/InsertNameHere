@@ -13,17 +13,6 @@ public class CreateIssueTest {
 
     public WebDriver driver;
 
-    public void performLogIn(String username, String password) {
-
-        WebElement usernameField = driver.findElement(By.id("login-form-username"));
-        WebElement passwordField = driver.findElement(By.id("login-form-password"));
-        WebElement logInButton = driver.findElement(By.id("login"));
-
-        usernameField.sendKeys(username);
-        passwordField.sendKeys(password);
-        logInButton.click();
-    }
-
     @BeforeAll
     public static void setDriver() {
         WebDriverManager.chromedriver().setup();
@@ -43,7 +32,7 @@ public class CreateIssueTest {
 
     public void preConditionLogIn() {
         driver.get("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
-        performLogIn("automation37", "CCAutoTest19.");
+        Util.logInWithUser(driver, "automation37", "CCAutoTest19.");
         Util.lookUpWebElementWithWait(driver, "#header-details-user-fullname");
     }
 
