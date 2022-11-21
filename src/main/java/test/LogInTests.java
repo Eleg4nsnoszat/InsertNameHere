@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.DashboardPage;
 import pages.LogInPage;
+import pages.LogOutPage;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,11 +16,13 @@ public class LogInTests {
 
     LogInPage logInPage;
     DashboardPage dashboardPage;
+    LogOutPage logOutPage;
 
 
     static final String loginPageUrl = "https://jira-auto.codecool.metastage.net";
     static final String loginErrorAlertMessage = "Sorry, your username and password are incorrect - please try again.";
     static final String captchaErrorMessage = "Sorry, your userid is required to answer a CAPTCHA question correctly.";
+    static final String successfullyLoggedOutMessage = "You are now logged out. Any automatic login has also been stopped.";
     static final String correctUsername = "automation35";
     static final String correctPassword = "CCAutoTest19.";
 
@@ -40,6 +43,7 @@ public class LogInTests {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
         dashboardPage = new DashboardPage(Util.driver);
+        logOutPage = new LogOutPage(Util.driver);
     }
 
     @Test
@@ -106,5 +110,14 @@ public class LogInTests {
         assertEquals(captchaErrorMessage, alertMessage);
 
         assertTrue(logInPage.getCaptchaInput().isDisplayed());
+    }
+
+    @Test
+    public void testLogOut() {
+        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
+
+        assertEquals(successfullyLoggedOutMessage, logOutPage.getLogOutMessage());
     }
 }
