@@ -9,6 +9,7 @@ import util.Util;
 public class LogInPage {
 
     WebDriver driver;
+    DashboardPage dashboardPage;
 
     @FindBy(xpath = "//input[@id='login-form-username']")
     WebElement usernameInput;
@@ -30,6 +31,7 @@ public class LogInPage {
 
     public LogInPage(WebDriver driver) {
         this.driver = driver;
+        this.dashboardPage = new DashboardPage(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -55,6 +57,7 @@ public class LogInPage {
         this.setUsernameInput(username);
         this.setPasswordInput(password);
         this.clickOnLoginButton();
+        Util.lookUpWebElementWithWait(driver, dashboardPage.getUserProfileElement());
     }
 
     public String getErrorMessage() {
