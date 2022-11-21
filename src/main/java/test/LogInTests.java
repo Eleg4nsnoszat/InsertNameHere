@@ -17,20 +17,6 @@ public class LogInTests {
     LogOutPage logOutPage;
 
 
-    static final String loginPageUrl = "https://jira-auto.codecool.metastage.net";
-    static final String loginErrorAlertMessage = "Sorry, your username and password are incorrect - please try again.";
-    static final String captchaErrorMessage = "Sorry, your userid is required to answer a CAPTCHA question correctly.";
-    static final String successfullyLoggedOutMessage = "You are now logged out. Any automatic login has also been stopped.";
-    static final String correctUsername = "automation39";
-    static final String correctPassword = "CCAutoTest19.";
-    static final String usernameForCaptchaTest = "automation35";
-    static final String incorrectUsername = "username123";
-    static final String incorrectPassword = "password123";
-
-    static final String emptyUsername = "";
-    static final String emptyPassword = "";
-
-
     @BeforeAll
     public static void setDriver() {
         Util.setChromeDriver();
@@ -52,53 +38,53 @@ public class LogInTests {
 
     @Test
     public void testSuccessfulLogIn() {
-        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
 
         String loggedInUsername = dashboardPage.checkUsername();
-        assertEquals(correctUsername, loggedInUsername);
+        assertEquals(Util.correctUsername, loggedInUsername);
 
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
     @Test
     public void testIncorrectUsername() {
-        logInPage.logInWithUser(loginPageUrl, incorrectUsername, correctPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.incorrectUsername, Util.correctPassword);
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals(loginErrorAlertMessage, alertMessage);
+        assertEquals(Util.loginErrorAlertMessage, alertMessage);
     }
 
     @Test
     public void testIncorrectPassword() {
-        logInPage.logInWithUser(loginPageUrl, correctUsername, incorrectPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.incorrectPassword);
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals(loginErrorAlertMessage, alertMessage);
+        assertEquals(Util.loginErrorAlertMessage, alertMessage);
 
-        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
     @Test
     public void testEmptyFields() {
-        logInPage.logInWithUser(loginPageUrl, emptyUsername, emptyPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.emptyUsername, Util.emptyPassword);
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals(loginErrorAlertMessage, alertMessage);
+        assertEquals(Util.loginErrorAlertMessage, alertMessage);
     }
 
     @Test
     public void testEmptyPassword() {
-        logInPage.logInWithUser(loginPageUrl, correctUsername, emptyPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.emptyPassword);
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals(loginErrorAlertMessage, alertMessage);
+        assertEquals(Util.loginErrorAlertMessage, alertMessage);
 
-        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
@@ -106,22 +92,22 @@ public class LogInTests {
     public void testLogInWithCaptcha() {
         for (int i=0; i<3; i++) {
             Util.refreshPage();
-            logInPage.logInWithUser(loginPageUrl, usernameForCaptchaTest, incorrectPassword);
+            logInPage.logInWithUser(Util.loginPageUrl, Util.usernameForCaptchaTest, Util.incorrectPassword);
         }
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals(captchaErrorMessage, alertMessage);
+        assertEquals(Util.captchaErrorMessage, alertMessage);
 
         assertTrue(logInPage.getCaptchaInput().isDisplayed());
     }
 
     @Test
     public void testLogOut() {
-        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
 
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
 
-        assertEquals(successfullyLoggedOutMessage, logOutPage.getLogOutMessage());
+        assertEquals(Util.successfullyLoggedOutMessage, logOutPage.getLogOutMessage());
     }
 }
