@@ -51,7 +51,7 @@ public class LogInPage {
 
 
     public void logInWithUser(String url, String username, String password) {
-        Util.navigateToUrl(driver, url);
+        Util.navigateToUrl(url);
         this.setUsernameInput(username);
         this.setPasswordInput(password);
         this.clickOnLoginButton();

@@ -46,7 +46,7 @@ public class Util {
         logOutOption.click();
     }
 
-    public static void navigateToUrl(WebDriver driver, String url) {
+    public static void navigateToUrl(String url) {
         driver.get(url);
     }
 
