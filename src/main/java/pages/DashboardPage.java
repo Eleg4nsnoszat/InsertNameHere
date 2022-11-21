@@ -13,6 +13,9 @@ public class DashboardPage {
     @FindBy(xpath = "//*[@id='header-details-user-fullname']")
     WebElement userProfile;
 
+    @FindBy(xpath = "//*[@id='log_out']")
+    WebElement logOut;
+
 
 
 
@@ -23,7 +26,13 @@ public class DashboardPage {
     }
 
 
+    public WebElement getUserProfile() {
+        return userProfile;
+    }
 
+    public WebElement getLogOut() {
+        return logOut;
+    }
 
     public String checkUsername() {
         return Util.lookUpWebElementWithWait(driver, userProfile).getAttribute("data-username");
