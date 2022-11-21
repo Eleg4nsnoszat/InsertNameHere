@@ -24,6 +24,10 @@ public class Util {
         return new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public static WebElement lookUpWebElementWithWait(WebDriver driver, WebElement element) {
+        return new WebDriverWait(driver, Duration.ofMillis(1000)).until(ExpectedConditions.elementToBeClickable(element));
+    }
+
     public static WebElement lookUpWebElementWithWait(WebDriver driver, int duration, String selector) {
         return new WebDriverWait(driver, Duration.ofMillis(duration)).until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
     }
