@@ -1,9 +1,7 @@
 package test;
 
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import pages.DashboardPage;
 import pages.LogInPage;
 import pages.LogOutPage;
@@ -45,6 +43,12 @@ public class LogInTests {
         dashboardPage = new DashboardPage(Util.driver);
         logOutPage = new LogOutPage(Util.driver);
     }
+
+    @AfterEach
+    public void quit() {
+        Util.quitBrowser();
+    }
+
 
     @Test
     public void testSuccessfulLogIn() {

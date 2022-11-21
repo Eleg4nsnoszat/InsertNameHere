@@ -62,4 +62,8 @@ public class Util {
     public static void getChromeDriver() {
         driver = new ChromeDriver();
     }
+
+    public static void quitBrowser() {
+        driver.quit();
+    }
 }
