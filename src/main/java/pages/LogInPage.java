@@ -9,7 +9,6 @@ import util.Util;
 public class LogInPage {
 
     WebDriver driver;
-    Util utils;
 
     @FindBy(xpath = "//input[@id='login-form-username']")
     WebElement usernameInput;
@@ -50,7 +49,7 @@ public class LogInPage {
 
 
     public void logInWithUser(String url, String username, String password) {
-        utils.navigateToUrl(driver, url);
+        Util.navigateToUrl(driver, url);
         this.setUsernameInput(username);
         this.setPasswordInput(password);
         this.clickOnLoginButton();
