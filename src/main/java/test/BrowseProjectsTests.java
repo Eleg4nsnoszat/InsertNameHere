@@ -17,6 +17,12 @@ public class BrowseProjectsTests {
     ProjectSummaryPage projectSummaryPage;
 
 
+    private void checkProjectSummaryPage(String projectName) {
+        Util.navigateToUrl("https://jira-auto.codecool.metastage.net/projects/" + projectName + "/summary");
+        assertEquals(projectName, projectSummaryPage.getProjectKey());
+    }
+
+
     @BeforeAll
     public static void setDriver() {
         Util.setChromeDriver();
@@ -37,9 +43,7 @@ public class BrowseProjectsTests {
 
     @Test
     public void browseMTPProjectTest(){
-        Util.navigateToUrl("https://jira-auto.codecool.metastage.net/projects/MTP/summary");
-        String projectName = projectSummaryPage.getProjectKey();
-        assertEquals("MTP", projectName);
+        checkProjectSummaryPage("MTP");
     }
 
     @Test
@@ -47,5 +51,20 @@ public class BrowseProjectsTests {
         Util.navigateToUrl("https://jira-auto.codecool.metastage.net/projects/DUCK/summary");
         String nonExistingProjectPage = projectSummaryPage.getCannotViewProjectMessage();
         assertEquals("You can't view this project", nonExistingProjectPage);
+    }
+
+    @Test
+    public void checkCOALAProjectDetailsTest(){
+        checkProjectSummaryPage("COALA");
+    }
+
+    @Test
+    public void checkTOUCANProjectDetailsTest(){
+        checkProjectSummaryPage("TOUCAN");
+    }
+
+    @Test
+    public void checkJETIProjectDetailsTest(){
+        checkProjectSummaryPage("JETI");
     }
 }
