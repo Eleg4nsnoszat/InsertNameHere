@@ -1,3 +1,5 @@
+package util;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -30,16 +32,6 @@ public class Util {
         jse.executeScript("arguments[0].scrollIntoView()", element);
     }
 
-    public static void logInWithUser(WebDriver driver, String username, String password) {
-
-        WebElement usernameField = driver.findElement(By.id("login-form-username"));
-        WebElement passwordField = driver.findElement(By.id("login-form-password"));
-        WebElement logInButton = driver.findElement(By.id("login"));
-
-        usernameField.sendKeys(username);
-        passwordField.sendKeys(password);
-        logInButton.click();
-    }
 
     public static void logOut(WebDriver driver) {
         WebElement userProfile = lookUpWebElementWithWait(driver, "#header-details-user-fullname");
@@ -47,5 +39,9 @@ public class Util {
         userProfile.click();
         WebElement logOutOption = driver.findElement(By.id("log_out"));
         logOutOption.click();
+    }
+
+    public void navigateToUrl(WebDriver driver, String url) {
+        driver.get(url);
     }
 }
