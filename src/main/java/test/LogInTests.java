@@ -4,13 +4,12 @@ package test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.DashboardPage;
 import pages.LogInPage;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LogInTests {
 
@@ -20,6 +19,7 @@ public class LogInTests {
 
     static final String loginPageUrl = "https://jira-auto.codecool.metastage.net";
     static final String loginErrorAlertMessage = "Sorry, your username and password are incorrect - please try again.";
+    static final String captchaErrorMessage = "Sorry, your userid is required to answer a CAPTCHA question correctly.";
     static final String correctUsername = "automation35";
     static final String correctPassword = "CCAutoTest19.";
 
@@ -92,5 +92,19 @@ public class LogInTests {
 
         logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
+    }
+
+    @Test
+    public void testLogInWithCaptcha() {
+        for (int i=0; i<3; i++) {
+            Util.refreshPage();
+            logInPage.logInWithUser(loginPageUrl, correctUsername, incorrectPassword);
+        }
+
+        String alertMessage = logInPage.getErrorMessage();
+
+        assertEquals(captchaErrorMessage, alertMessage);
+
+        assertTrue(logInPage.getCaptchaInput().isDisplayed());
     }
 }
