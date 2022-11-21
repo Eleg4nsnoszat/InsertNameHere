@@ -1,6 +1,5 @@
 package pages;
 
-import org.asynchttpclient.uri.Uri;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
