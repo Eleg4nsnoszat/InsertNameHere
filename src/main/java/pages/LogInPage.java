@@ -1,5 +1,6 @@
 package pages;
 
+import org.asynchttpclient.uri.Uri;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,9 @@ public class LogInPage {
 
     @FindBy(xpath = "//*[@id='usernameerror']/child::p")
     WebElement logInErrorMessage;
+
+    @FindBy(xpath = "//*[@id='login-form-captcha']")
+    WebElement captchaInput;
 
 
 
@@ -47,7 +51,6 @@ public class LogInPage {
 
 
 
-
     public void logInWithUser(String url, String username, String password) {
         Util.navigateToUrl(driver, url);
         this.setUsernameInput(username);
@@ -57,5 +60,9 @@ public class LogInPage {
 
     public String getErrorMessage() {
         return Util.lookUpWebElementWithWait(driver, logInErrorMessage).getText();
+    }
+
+    public WebElement getCaptchaInput() {
+        return Util.lookUpWebElementWithWait(driver, captchaInput);
     }
 }
