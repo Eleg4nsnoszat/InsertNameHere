@@ -38,13 +38,13 @@ public class Util {
     }
 
 
-/*    public static void logOut(WebDriver driver) {
-        WebElement userProfile = lookUpWebElementWithWait(driver, "#header-details-user-fullname");
-        Util.scrollToElement(driver, userProfile);
-        userProfile.click();
-        WebElement logOutOption = driver.findElement(By.id("log_out"));
+    public static void logOut(WebElement userProfile, WebElement logOut) {
+        WebElement userDropdown = lookUpWebElementWithWait(driver, userProfile);
+        Util.scrollToElement(driver, userDropdown);
+        userDropdown.click();
+        WebElement logOutOption = lookUpWebElementWithWait(driver, logOut);
         logOutOption.click();
-    }*/
+    }
 
     public static void navigateToUrl(WebDriver driver, String url) {
         driver.get(url);
