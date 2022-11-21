@@ -23,9 +23,9 @@ public class LogInTests {
     static final String loginErrorAlertMessage = "Sorry, your username and password are incorrect - please try again.";
     static final String captchaErrorMessage = "Sorry, your userid is required to answer a CAPTCHA question correctly.";
     static final String successfullyLoggedOutMessage = "You are now logged out. Any automatic login has also been stopped.";
-    static final String correctUsername = "automation35";
+    static final String correctUsername = "automation39";
     static final String correctPassword = "CCAutoTest19.";
-
+    static final String usernameForCaptchaTest = "automation35";
     static final String incorrectUsername = "username123";
     static final String incorrectPassword = "password123";
 
@@ -102,7 +102,7 @@ public class LogInTests {
     public void testLogInWithCaptcha() {
         for (int i=0; i<3; i++) {
             Util.refreshPage();
-            logInPage.logInWithUser(loginPageUrl, correctUsername, incorrectPassword);
+            logInPage.logInWithUser(loginPageUrl, usernameForCaptchaTest, incorrectPassword);
         }
 
         String alertMessage = logInPage.getErrorMessage();
