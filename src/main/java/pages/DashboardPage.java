@@ -26,7 +26,7 @@ public class DashboardPage {
     }
 
 
-    public WebElement getUserProfile() {
+    public WebElement getUserProfileElement() {
         return userProfile;
     }
 
