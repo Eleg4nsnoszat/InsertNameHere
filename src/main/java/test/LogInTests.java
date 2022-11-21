@@ -26,6 +26,9 @@ public class LogInTests {
     static final String incorrectUsername = "username123";
     static final String incorrectPassword = "password123";
 
+    static final String emptyUsername = "";
+    static final String emptyPassword = "";
+
 
     @BeforeAll
     public static void setDriver() {
@@ -46,7 +49,7 @@ public class LogInTests {
         String loggedInUsername = dashboardPage.checkUsername();
         assertEquals("automation35", loggedInUsername);
 
-        Util.logOut(dashboardPage.getUserProfile(), dashboardPage.getLogOut());
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
     @Test
@@ -67,6 +70,15 @@ public class LogInTests {
         assertEquals(loginErrorAlertMessage, alertMessage);
 
         logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
-        Util.logOut(dashboardPage.getUserProfile(), dashboardPage.getLogOut());
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
+    }
+
+    @Test
+    public void testEmptyFields() {
+        logInPage.logInWithUser(loginPageUrl, emptyUsername, emptyPassword);
+
+        String alertMessage = logInPage.getErrorMessage();
+
+        assertEquals(loginErrorAlertMessage, alertMessage);
     }
 }
