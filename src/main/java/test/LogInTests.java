@@ -16,6 +16,14 @@ public class LogInTests {
     DashboardPage dashboardPage;
 
 
+    static final String loginPageUrl = "https://jira-auto.codecool.metastage.net";
+    static final String correctUsername = "automation35";
+    static final String correctPassword = "CCAutoTest19.";
+
+    static final String incorrectUsername = "username123";
+    static final String incorrectPassword = "password123";
+
+
     @BeforeAll
     public static void setDriver() {
         Util.setChromeDriver();
@@ -30,11 +38,20 @@ public class LogInTests {
 
     @Test
     public void testSuccessfulLogIn() {
-        logInPage.logInWithUser("https://jira-auto.codecool.metastage.net", "automation35", "CCAutoTest19.");
+        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
 
         String loggedInUsername = dashboardPage.checkUsername();
         assertEquals("automation35", loggedInUsername);
 
         Util.logOut(dashboardPage.getUserProfile(), dashboardPage.getLogOut());
+    }
+
+    @Test
+    public void testIncorrectUsername() {
+        logInPage.logInWithUser(loginPageUrl, incorrectUsername, correctPassword);
+
+        String alertMessage = logInPage.getErrorMessage();
+
+        assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
     }
 }
