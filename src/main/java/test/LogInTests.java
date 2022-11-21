@@ -30,10 +30,11 @@ public class LogInTests {
 
     @Test
     public void testSuccessfulLogIn() {
-
         logInPage.logInWithUser("https://jira-auto.codecool.metastage.net", "automation35", "CCAutoTest19.");
 
         String loggedInUsername = dashboardPage.checkUsername();
         assertEquals("automation35", loggedInUsername);
+
+        Util.logOut(dashboardPage.getUserProfile(), dashboardPage.getLogOut());
     }
 }
