@@ -81,4 +81,16 @@ public class LogInTests {
 
         assertEquals(loginErrorAlertMessage, alertMessage);
     }
+
+    @Test
+    public void testEmptyPassword() {
+        logInPage.logInWithUser(loginPageUrl, correctUsername, emptyPassword);
+
+        String alertMessage = logInPage.getErrorMessage();
+
+        assertEquals(loginErrorAlertMessage, alertMessage);
+
+        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
+    }
 }
