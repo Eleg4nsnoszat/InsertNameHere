@@ -4,6 +4,8 @@ package test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pages.DashboardPage;
 import pages.LogInPage;
 import util.Util;
@@ -17,6 +19,7 @@ public class LogInTests {
 
 
     static final String loginPageUrl = "https://jira-auto.codecool.metastage.net";
+    static final String loginErrorAlertMessage = "Sorry, your username and password are incorrect - please try again.";
     static final String correctUsername = "automation35";
     static final String correctPassword = "CCAutoTest19.";
 
@@ -52,6 +55,18 @@ public class LogInTests {
 
         String alertMessage = logInPage.getErrorMessage();
 
-        assertEquals("Sorry, your username and password are incorrect - please try again.", alertMessage);
+        assertEquals(loginErrorAlertMessage, alertMessage);
+    }
+
+    @Test
+    public void testIncorrectPassword() {
+        logInPage.logInWithUser(loginPageUrl, correctUsername, incorrectPassword);
+
+        String alertMessage = logInPage.getErrorMessage();
+
+        assertEquals(loginErrorAlertMessage, alertMessage);
+
+        logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
+        Util.logOut(dashboardPage.getUserProfile(), dashboardPage.getLogOut());
     }
 }
