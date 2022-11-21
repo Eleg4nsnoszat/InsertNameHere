@@ -19,7 +19,7 @@ public class LogInPage {
     @FindBy(xpath = "//input[@id='login']")
     WebElement loginButton;
 
-    @FindBy(xpath = "//*[@id='usernameerror']/")
+    @FindBy(xpath = "//*[@id='usernameerror']/child::p")
     WebElement logInErrorMessage;
 
 
@@ -56,6 +56,6 @@ public class LogInPage {
     }
 
     public String getErrorMessage() {
-        return logInErrorMessage.getText();
+        return Util.lookUpWebElementWithWait(driver, logInErrorMessage).getText();
     }
 }
