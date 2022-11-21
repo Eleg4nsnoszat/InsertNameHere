@@ -50,6 +50,10 @@ public class Util {
         driver.get(url);
     }
 
+    public static void refreshPage() {
+        driver.navigate().refresh();
+    }
+
 
     public static void setChromeDriver() {
         WebDriverManager.chromedriver().setup();
