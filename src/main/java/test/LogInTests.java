@@ -51,7 +51,7 @@ public class LogInTests {
         logInPage.logInWithUser(loginPageUrl, correctUsername, correctPassword);
 
         String loggedInUsername = dashboardPage.checkUsername();
-        assertEquals("automation35", loggedInUsername);
+        assertEquals(correctUsername, loggedInUsername);
 
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
