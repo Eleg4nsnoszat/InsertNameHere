@@ -38,6 +38,7 @@ public class BrowseProjectsTests {
 
     @AfterEach
     public void quit() {
+        Util.logOut(projectSummaryPage.getUserProfile(), projectSummaryPage.getLogOut());
         Util.quitBrowser();
     }
 
