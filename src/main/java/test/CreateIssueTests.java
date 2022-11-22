@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.*;
-import util.ReadFromConfig;
 import util.Util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class CreateIssueTests {
@@ -32,9 +31,8 @@ public class CreateIssueTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
+        Util.waitForDashboard();
         dashboardPage = new DashboardPage(Util.driver);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);
@@ -49,11 +47,16 @@ public class CreateIssueTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/IssueTestData.csv", numLinesToSkip = 1)
-    public void createIssuesTest(String projectName, String issueType, String issueSummary) {
-        createIssuePage.createIssueBase(projectName,issueType,issueSummary);
-        createIssuePage.clickOnCreatedIssueModalLink();
-        issuePage.validateIssueBase(issueSummary);
-        issuePage.deleteIssue();
+    public void createIssuesTest(String projectName, String issueType, String issueSummary) throws Exception {
+        try {
+            createIssuePage.createIssueBase(projectName, issueType, issueSummary);
+            createIssuePage.clickOnCreatedIssueModalLink();
+            issuePage.validateIssueBase(issueSummary);
+            issuePage.deleteIssue();
+        } catch (Exception error) {
+            Util.forceQuit();
+            throw new Exception("No such element: " + projectName, error);
+        }
     }
 
     @ParameterizedTest
@@ -68,9 +71,9 @@ public class CreateIssueTests {
 
     @Test
     public void cancelIssueTest(){
-        String summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Bug", "MTP test issue summary");
+        String summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Bug", "Cancel Issue");
 
         //Validate that no new issue is created
-        assertEquals(summaryFieldCheck, "MTP test issue summary");
+        assertNotEquals(summaryFieldCheck, "Cancel Issue");
     }
 }
