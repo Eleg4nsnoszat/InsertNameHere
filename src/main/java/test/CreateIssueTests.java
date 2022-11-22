@@ -4,16 +4,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pages.CreateIssuePage;
-import pages.CreateSubtaskPage;
-import pages.IssuePage;
-import pages.LogInPage;
+import org.openqa.selenium.WebElement;
+import pages.*;
 import util.Util;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class CreateIssueTests {
 
     LogInPage logInPage;
+    DashboardPage dashboardPage;
     CreateIssuePage createIssuePage;
     IssuePage issuePage;
     CreateSubtaskPage createSubtaskPage;
@@ -29,6 +30,7 @@ public class CreateIssueTests {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
         logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
+        dashboardPage = new DashboardPage(Util.driver);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);
         createSubtaskPage = new CreateSubtaskPage(Util.driver);
@@ -36,7 +38,7 @@ public class CreateIssueTests {
 
     @AfterEach
     public void quit() {
-        Util.logOut(issuePage.getUserProfile(), issuePage.getLogOut());
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
         Util.quitBrowser();
     }
 
@@ -55,5 +57,13 @@ public class CreateIssueTests {
         createSubtaskPage.createSubtask("MTP test subtask summary");
         issuePage.validateSubtask("MTP test subtask summary");
         issuePage.deleteIssue();
+    }
+
+    @Test
+    public void cancelIssueTest(){
+        WebElement summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Bug", "MTP test issue summary");
+
+        //Validate that no new issue is created
+        assertTrue(summaryFieldCheck.isDisplayed(), "MTP test issue summary");
     }
 }
