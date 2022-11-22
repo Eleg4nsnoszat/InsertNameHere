@@ -61,12 +61,17 @@ public class CreateIssueTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/SubTaskTestData.csv", numLinesToSkip = 1)
-    public void createIssueSubtaskTest(String projectName, String issueType, String issueSummary, String subTask){
-        createIssuePage.createIssueBase(projectName,issueType,issueSummary);
-        createIssuePage.clickOnCreatedIssueModalLink();
-        createSubtaskPage.createSubtask(subTask);
-        issuePage.validateSubtask(subTask);
-        issuePage.deleteIssue();
+    public void createIssueSubtaskTest(String projectName, String issueType, String issueSummary, String subTask) throws Exception {
+        try {
+            createIssuePage.createIssueBase(projectName, issueType, issueSummary);
+            createIssuePage.clickOnCreatedIssueModalLink();
+            createSubtaskPage.createSubtask(subTask);
+            issuePage.validateSubtask(subTask);
+            issuePage.deleteIssue();
+        } catch (Exception error) {
+            Util.forceQuit();
+            throw new Exception("No such element: " + projectName, error);
+        }
     }
 
     @Test
