@@ -1,10 +1,7 @@
 package util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -85,5 +82,10 @@ public class Util {
 
     public static void quitBrowser() {
         driver.quit();
+    }
+
+    public static void acceptAlert() {
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
     }
 }
