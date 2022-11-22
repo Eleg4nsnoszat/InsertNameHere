@@ -60,6 +60,13 @@ public class LogInPage {
         Util.lookUpWebElementWithWait(driver, dashboardPage.getUserProfileElement());
     }
 
+    public void logInWithIncorrectUser(String url, String username, String password) {
+        Util.navigateToUrl(url);
+        this.setUsernameInput(username);
+        this.setPasswordInput(password);
+        this.clickOnLoginButton();
+    }
+
     public String getErrorMessage() {
         return Util.lookUpWebElementWithWait(driver, logInErrorMessage).getText();
     }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
+import util.ReadFromConfig;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +28,9 @@ public class EditIssueTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
+        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
+                ReadFromConfig.readFromFile("correctUsername"),
+                ReadFromConfig.readFromFile("correctPassword"));
         dashboardPage = new DashboardPage(Util.driver);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);

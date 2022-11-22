@@ -1,10 +1,14 @@
 package test;
 
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.*;
+import util.ReadFromConfig;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +32,9 @@ public class CreateIssueTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
+        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
+                ReadFromConfig.readFromFile("correctUsername"),
+                ReadFromConfig.readFromFile("correctPassword"));
         dashboardPage = new DashboardPage(Util.driver);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);
@@ -41,26 +47,28 @@ public class CreateIssueTests {
         Util.quitBrowser();
     }
 
-    @Test
-    public void createIssueMTPBugTest() {
-        createIssuePage.createIssueBase("Main Testing Project (MTP)","Bug","MTP test issue summary");
+    @ParameterizedTest
+    @CsvFileSource(resources = "/IssueTestData.csv", numLinesToSkip = 1)
+    public void createIssuesTest(String projectName, String issueType, String issueSummary) {
+        createIssuePage.createIssueBase(projectName,issueType,issueSummary);
         createIssuePage.clickOnCreatedIssueModalLink();
-        issuePage.validateIssueBase("MTP test issue summary");
+        issuePage.validateIssueBase(issueSummary);
         issuePage.deleteIssue();
     }
 
-    @Test
-    public void createIssueMTPSubtaskTest(){
-        createIssuePage.createIssueBase("Main Testing Project (MTP)","Task","MTP test issue summary");
+    @ParameterizedTest
+    @CsvFileSource(resources = "/SubTaskTestData.csv", numLinesToSkip = 1)
+    public void createIssueSubtaskTest(String projectName, String issueType, String issueSummary, String subTask){
+        createIssuePage.createIssueBase(projectName,issueType,issueSummary);
         createIssuePage.clickOnCreatedIssueModalLink();
-        createSubtaskPage.createSubtask("MTP test subtask summary");
-        issuePage.validateSubtask("MTP test subtask summary");
+        createSubtaskPage.createSubtask(subTask);
+        issuePage.validateSubtask(subTask);
         issuePage.deleteIssue();
     }
 
     @Test
     public void cancelIssueTest(){
-        String summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Task", "MTP test issue summary");
+        String summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Bug", "MTP test issue summary");
 
         //Validate that no new issue is created
         assertEquals(summaryFieldCheck, "MTP test issue summary");

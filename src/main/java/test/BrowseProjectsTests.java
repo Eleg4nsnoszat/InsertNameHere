@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import pages.DashboardPage;
 import pages.LogInPage;
 import pages.ProjectSummaryPage;
+import util.ReadFromConfig;
 import util.Util;
 
 
@@ -34,7 +35,9 @@ public class BrowseProjectsTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
+        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
+                ReadFromConfig.readFromFile("correctUsername"),
+                ReadFromConfig.readFromFile("correctPassword"));
         dashboardPage = new DashboardPage(Util.driver);
         projectSummaryPage = new ProjectSummaryPage(Util.driver);
     }
