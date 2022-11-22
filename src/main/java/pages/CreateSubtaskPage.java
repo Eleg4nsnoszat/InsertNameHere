@@ -10,12 +10,8 @@ import util.Util;
 public class CreateSubtaskPage {
 
     WebDriver driver;
+    IssuePage issuePage;
 
-    @FindBy(xpath = "//*[@id='opsbar-operations_more']")
-    WebElement moreOptionsDropdown;
-
-    @FindBy(xpath = "//*[@id='create-subtask']/a")
-    WebElement createSubtaskOption;
 
     @FindBy(xpath = "//*[@id='summary']")
     WebElement summaryInput;
@@ -27,6 +23,7 @@ public class CreateSubtaskPage {
 
     public CreateSubtaskPage(WebDriver driver) {
         this.driver = driver;
+        issuePage = new IssuePage(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -35,9 +32,9 @@ public class CreateSubtaskPage {
 
     public void createSubtask(String subtaskSummary){
         Actions actions = new Actions(driver);
-        WebElement moreButton = Util.lookUpWebElementWithWait(driver, moreOptionsDropdown);
+        WebElement moreButton = Util.lookUpWebElementWithWait(driver, issuePage.getMoreOptionsDropdown());
         actions.moveToElement(moreButton).click().build().perform();
-        Util.lookUpWebElementWithWait(driver, createSubtaskOption).click();
+        Util.lookUpWebElementWithWait(driver, issuePage.getCreateSubtaskOption()).click();
         Util.lookUpWebElementWithWait(driver, summaryInput).sendKeys(subtaskSummary);
         Util.lookUpWebElementWithWait(driver, createSubtaskSubmitButton).click();
     }
