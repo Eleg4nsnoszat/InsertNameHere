@@ -49,7 +49,7 @@ public class IssuePage {
     }
 
     public String getIssueSummaryHeader() {
-        return issueSummaryHeader.getText();
+        return Util.lookUpWebElementWithWait(driver, issueSummaryHeader).getText();
     }
 
     public WebElement getMoreOptionsDropdown() {

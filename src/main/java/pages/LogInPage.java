@@ -39,15 +39,15 @@ public class LogInPage {
 
 
     private void setUsernameInput(String username) {
-        usernameInput.sendKeys(username);
+        Util.lookUpWebElementWithWait(driver, usernameInput).sendKeys(username);
     }
 
     private void setPasswordInput(String password) {
-        passwordInput.sendKeys(password);
+        Util.lookUpWebElementWithWait(driver, passwordInput).sendKeys(password);
     }
 
     private void clickOnLoginButton() {
-        loginButton.click();
+        Util.lookUpWebElementWithWait(driver, loginButton).click();
     }
 
 

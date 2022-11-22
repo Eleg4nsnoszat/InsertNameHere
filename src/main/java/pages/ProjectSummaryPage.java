@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import util.Util;
 
 public class ProjectSummaryPage {
 
@@ -28,10 +29,10 @@ public class ProjectSummaryPage {
 
 
     public String getProjectKey() {
-        return projectKey.getText();
+        return Util.lookUpWebElementWithWait(driver, projectKey).getText();
     }
 
     public String getCannotViewProjectMessage() {
-        return cannotViewProjectMessage.getText();
+        return Util.lookUpWebElementWithWait(driver, cannotViewProjectMessage).getText();
     }
 }
