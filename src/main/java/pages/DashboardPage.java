@@ -16,6 +16,15 @@ public class DashboardPage {
     @FindBy(xpath = "//*[@id='log_out']")
     WebElement logOut;
 
+    @FindBy(xpath = "//*[@id='find_link']")
+    WebElement issuesOption;
+
+    @FindBy(xpath = "//*[@id='filter_lnk_reported_lnk']")
+    WebElement reportedByMe;
+
+    @FindBy(xpath = "//*[@id='create_link']")
+    WebElement createButton;
+
 
 
 
@@ -34,7 +43,19 @@ public class DashboardPage {
         return logOut;
     }
 
+    public WebElement getIssuesOption() {
+        return issuesOption;
+    }
+
+    public WebElement getReportedByMe() {
+        return reportedByMe;
+    }
+
     public String checkUsername() {
         return Util.lookUpWebElementWithWait(driver, userProfile).getAttribute("data-username");
+    }
+
+    public void clickOnCreateButton() {
+        Util.lookUpWebElementWithWait(driver, createButton).click();
     }
 }
