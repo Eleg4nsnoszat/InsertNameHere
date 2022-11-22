@@ -35,9 +35,8 @@ public class BrowseProjectsTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
+        Util.waitForDashboard();
         dashboardPage = new DashboardPage(Util.driver);
         projectSummaryPage = new ProjectSummaryPage(Util.driver);
     }

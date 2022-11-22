@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
-import util.ReadFromConfig;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,9 +27,8 @@ public class EditIssueTests {
     public void setup() {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
+        Util.waitForDashboard();
         dashboardPage = new DashboardPage(Util.driver);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);
@@ -57,8 +55,7 @@ public class EditIssueTests {
         // Check if the summary text remains the same after page refresh
         Util.refreshPage();
         Util.acceptAlert();
-        String issueSummary = issuePage.getIssueSummaryHeader();
-        assertEquals("Big-sub", issueSummary);
+        assertEquals("Big-sub", issuePage.getIssueSummaryHeader().getText());
 
         // Delete the created test issue
         issuePage.deleteIssue();
@@ -70,8 +67,7 @@ public class EditIssueTests {
         issuePage.clickOnEditButton();
         editIssuePage.editIssueSummaryField("Edited-sub");
         editIssuePage.clickOnUpdate();
-        String issueSummary = issuePage.getIssueSummaryHeader();
-        assertEquals("Edited-sub", issueSummary);
+        assertEquals("Edited-sub", issuePage.getIssueSummaryHeader().getText());
     }
 
     @Test
