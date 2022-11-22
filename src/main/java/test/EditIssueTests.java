@@ -70,4 +70,19 @@ public class EditIssueTests {
         String issueSummary = issuePage.getIssueSummaryHeader();
         assertEquals("Edited-sub", issueSummary);
     }
+
+    @Test
+    public void editCOALAIssueTest(){
+        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/COALA/issues/COALA-180?filter=allissues");
+    }
+
+    @Test
+    public void editTOUCANIssueTest(){
+        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/TOUCAN/issues/TOUCAN-239?filter=allissues");
+    }
+
+    @Test
+    public void editJETIIssueTest(){
+        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/JETI/issues/JETI-123?filter=allissues");
+    }
 }
