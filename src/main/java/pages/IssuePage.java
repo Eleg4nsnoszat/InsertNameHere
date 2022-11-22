@@ -49,8 +49,8 @@ public class IssuePage {
         return Util.lookUpWebElementWithWait(driver, issueID).getText();
     }
 
-    public String getIssueSummaryHeader() {
-        return Util.lookUpWebElementWithWait(driver, issueSummaryHeader).getText();
+    public WebElement getIssueSummaryHeader() {
+        return Util.lookUpWebElementWithWait(driver, issueSummaryHeader);
     }
 
     public WebElement getMoreOptionsDropdown() {
