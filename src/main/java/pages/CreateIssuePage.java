@@ -83,12 +83,12 @@ public class CreateIssuePage {
         Util.lookUpWebElementWithWait(driver, createdIssueLink).click();
     }
 
-    public WebElement cancelIssue(String projectName, String issueType, String issueSummary) {
+    public String cancelIssue(String projectName, String issueType, String issueSummary) {
         // Initiate new issue creation
         dashboardPage.clickOnCreateButton();
-        setProjectField(projectName);
-        setIssueTypeField(issueType);
-        setSummaryField(issueSummary);
+        this.setProjectField(projectName);
+        this.setIssueTypeField(issueType);
+        this.setSummaryField(issueSummary);
 
         // Find and click on cancel button
         Util.lookUpWebElementWithWait(driver, cancelButton).click();
@@ -97,9 +97,9 @@ public class CreateIssuePage {
         Alert alert = driver.switchTo().alert();
         alert.accept();
 
-        // Get WebElement to validate that no new issue is created
+        // Get issue header text to validate that no new issue is created
         Util.lookUpWebElementWithWait(driver, dashboardPage.getIssuesOption()).click();
         Util.lookUpWebElementWithWait(driver, dashboardPage.getReportedByMe()).click();
-        return Util.lookUpWebElementWithWait(driver, issuePage.getIssueSummaryHeader());
+        return Util.lookUpWebElementWithWait(driver, issuePage.getIssueSummaryHeader()).getText();
     }
 }

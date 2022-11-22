@@ -4,11 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
 import pages.*;
 import util.Util;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CreateIssueTests {
@@ -61,9 +60,9 @@ public class CreateIssueTests {
 
     @Test
     public void cancelIssueTest(){
-        WebElement summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Bug", "MTP test issue summary");
+        String summaryFieldCheck = createIssuePage.cancelIssue("Main Testing Project (MTP)", "Task", "MTP test issue summary");
 
         //Validate that no new issue is created
-        assertTrue(summaryFieldCheck.isDisplayed(), "MTP test issue summary");
+        assertEquals(summaryFieldCheck, "MTP test issue summary");
     }
 }
