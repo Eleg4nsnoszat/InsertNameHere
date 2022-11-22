@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pages.DashboardPage;
 import pages.IssuePage;
 import pages.LogInPage;
 import util.Util;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class BrowseIssueTests {
 
     LogInPage logInPage;
+    DashboardPage dashboardPage;
     IssuePage issuePage;
 
 
@@ -33,12 +35,13 @@ public class BrowseIssueTests {
         Util.getChromeDriver();
         logInPage = new LogInPage(Util.driver);
         logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
+        dashboardPage = new DashboardPage(Util.driver);
         issuePage = new IssuePage(Util.driver);
     }
 
     @AfterEach
     public void quit() {
-        Util.logOut(issuePage.getUserProfile(), issuePage.getLogOut());
+        Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
         Util.quitBrowser();
     }
 
