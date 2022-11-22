@@ -39,20 +39,19 @@ public class LogInTests {
 
     @Test
     public void testSuccessfulLogIn() {
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url","correctUsername", "correctPassword");
+        Util.waitForDashboard();
+
         String loggedInUsername = dashboardPage.checkUsername();
-        assertEquals(ReadFromConfig.readFromFile("correctUsername"), loggedInUsername);
+        String correctUsername = ReadFromConfig.readFromFile("correctUsername");
+        assertEquals(correctUsername, loggedInUsername);
 
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
     @Test
     public void testIncorrectUsername() {
-        logInPage.logInWithIncorrectUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("incorrectUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "incorrectUsername", "correctPassword");
 
         String alertMessage = logInPage.getErrorMessage();
 
@@ -61,25 +60,20 @@ public class LogInTests {
 
     @Test
     public void testIncorrectPassword() {
-        logInPage.logInWithIncorrectUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("incorrectPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "incorrectPassword");
 
         String alertMessage = logInPage.getErrorMessage();
 
         assertEquals(Util.loginErrorAlertMessage, alertMessage);
 
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
+        Util.waitForDashboard();
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
     @Test
     public void testEmptyFields() {
-        logInPage.logInWithIncorrectUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("emptyUsername"),
-                ReadFromConfig.readFromFile("emptyPassword"));
+        logInPage.logInWithUser("url", "emptyUsername", "emptyPassword");
 
         String alertMessage = logInPage.getErrorMessage();
 
@@ -88,17 +82,14 @@ public class LogInTests {
 
     @Test
     public void testEmptyPassword() {
-        logInPage.logInWithIncorrectUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("emptyPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "emptyPassword");
 
         String alertMessage = logInPage.getErrorMessage();
 
         assertEquals(Util.loginErrorAlertMessage, alertMessage);
 
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
+        Util.waitForDashboard();
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
     }
 
@@ -106,9 +97,7 @@ public class LogInTests {
     public void testLogInWithCaptcha() {
         for (int i=0; i<3; i++) {
             Util.refreshPage();
-            logInPage.logInWithIncorrectUser(ReadFromConfig.readFromFile("url"),
-                    ReadFromConfig.readFromFile("usernameForCaptchaTest"),
-                    ReadFromConfig.readFromFile("incorrectPassword"));
+            logInPage.logInWithUser("url", "usernameForCaptchaTest", "incorrectPassword");
         }
 
         String alertMessage = logInPage.getErrorMessage();
@@ -120,9 +109,7 @@ public class LogInTests {
 
     @Test
     public void testLogOut() {
-        logInPage.logInWithUser(ReadFromConfig.readFromFile("url"),
-                ReadFromConfig.readFromFile("correctUsername"),
-                ReadFromConfig.readFromFile("correctPassword"));
+        logInPage.logInWithUser("url", "correctUsername", "correctPassword");
 
         Util.logOut(dashboardPage.getUserProfileElement(), dashboardPage.getLogOut());
 
