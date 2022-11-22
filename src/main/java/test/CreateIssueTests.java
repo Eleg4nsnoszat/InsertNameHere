@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.CreateIssuePage;
+import pages.CreateSubtaskPage;
 import pages.IssuePage;
 import pages.LogInPage;
 import util.Util;
@@ -15,6 +16,7 @@ public class CreateIssueTests {
     LogInPage logInPage;
     CreateIssuePage createIssuePage;
     IssuePage issuePage;
+    CreateSubtaskPage createSubtaskPage;
 
 
     @BeforeAll
@@ -29,6 +31,7 @@ public class CreateIssueTests {
         logInPage.logInWithUser(Util.loginPageUrl, Util.correctUsername, Util.correctPassword);
         createIssuePage = new CreateIssuePage(Util.driver);
         issuePage = new IssuePage(Util.driver);
+        createSubtaskPage = new CreateSubtaskPage(Util.driver);
     }
 
     @AfterEach
@@ -42,6 +45,15 @@ public class CreateIssueTests {
         createIssuePage.createIssueBase("Main Testing Project (MTP)","Bug","MTP test issue summary");
         createIssuePage.clickOnCreatedIssueModalLink();
         issuePage.validateIssueBase("MTP test issue summary");
+        issuePage.deleteIssue();
+    }
+
+    @Test
+    public void createIssueMTPSubtaskTest(){
+        createIssuePage.createIssueBase("Main Testing Project (MTP)","Task","MTP test issue summary");
+        createIssuePage.clickOnCreatedIssueModalLink();
+        createSubtaskPage.createSubtask("MTP test subtask summary");
+        issuePage.validateSubtask("MTP test subtask summary");
         issuePage.deleteIssue();
     }
 }
