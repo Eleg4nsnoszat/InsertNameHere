@@ -34,6 +34,9 @@ public class IssuePage {
     @FindBy(xpath = "//*[@class='stsummary']/a")
     WebElement subtaskLink;
 
+    @FindBy(xpath = "//*[@id='edit-issue']")
+    WebElement editButton;
+
 
     public IssuePage(WebDriver driver) {
         this.driver = driver;
@@ -45,8 +48,8 @@ public class IssuePage {
         return Util.lookUpWebElementWithWait(driver, issueID).getText();
     }
 
-    public WebElement getIssueSummaryHeader() {
-        return issueSummaryHeader;
+    public String getIssueSummaryHeader() {
+        return issueSummaryHeader.getText();
     }
 
     public WebElement getMoreOptionsDropdown() {
@@ -75,5 +78,9 @@ public class IssuePage {
     public void validateSubtask(String subtaskSummary){
         WebElement subtask = Util.lookUpWebElementWithWait(driver, subtaskLink);
         assertEquals(subtaskSummary, subtask.getText());
+    }
+
+    public void clickOnEditButton() {
+        editButton.click();
     }
 }
