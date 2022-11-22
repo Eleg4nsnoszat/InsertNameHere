@@ -31,6 +31,6 @@ public class EditIssuePage {
     }
 
     public void clickOnUpdate() {
-        updateButton.click();
+        Util.lookUpWebElementWithWait(driver, updateButton).click();
     }
 }
