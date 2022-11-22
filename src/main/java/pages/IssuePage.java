@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import util.Util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IssuePage {
 
@@ -78,6 +79,12 @@ public class IssuePage {
     public void validateSubtask(String subtaskSummary){
         WebElement subtask = Util.lookUpWebElementWithWait(driver, subtaskLink);
         assertEquals(subtaskSummary, subtask.getText());
+    }
+
+    public void checkIfEditButtonIsDisplayed(String url){
+        Util.navigateToUrl(url);
+        WebElement editOption = Util.lookUpWebElementWithWait(driver, editButton);
+        assertTrue(editOption.isDisplayed());
     }
 
     public void clickOnEditButton() {
