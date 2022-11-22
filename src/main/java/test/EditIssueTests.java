@@ -60,4 +60,14 @@ public class EditIssueTests {
         // Delete the created test issue
         issuePage.deleteIssue();
     }
+
+    @Test
+    public void cancelEditIssueTest() {
+        Util.navigateToUrl("https://jira-auto.codecool.metastage.net/browse/MTP-2686?filter=-2");
+        issuePage.clickOnEditButton();
+        editIssuePage.editIssueSummaryField("Edited-sub");
+        editIssuePage.clickOnUpdate();
+        String issueSummary = issuePage.getIssueSummaryHeader();
+        assertEquals("Edited-sub", issueSummary);
+    }
 }
