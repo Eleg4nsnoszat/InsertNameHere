@@ -16,17 +16,14 @@ public class IssuePage {
     @FindBy(xpath = "//*[@id='key-val']")
     WebElement issueID;
 
-    @FindBy(xpath = "//*[@id='header-details-user-fullname']")
-    WebElement userProfile;
-
-    @FindBy(xpath = "//*[@id='log_out']")
-    WebElement logOut;
-
     @FindBy(xpath = "//*[@id='summary-val']")
     WebElement issueSummaryHeader;
 
     @FindBy(xpath = "//*[@id='opsbar-operations_more']")
     WebElement moreOptionsDropdown;
+
+    @FindBy(xpath = "//*[@id='create-subtask']/a")
+    WebElement createSubtaskOption;
 
     @FindBy(xpath = "//*[@id='delete-issue']/a")
     WebElement deleteOption;
@@ -48,12 +45,16 @@ public class IssuePage {
         return Util.lookUpWebElementWithWait(driver, issueID).getText();
     }
 
-    public WebElement getUserProfile() {
-        return userProfile;
+    public WebElement getIssueSummaryHeader() {
+        return issueSummaryHeader;
     }
 
-    public WebElement getLogOut() {
-        return logOut;
+    public WebElement getMoreOptionsDropdown() {
+        return moreOptionsDropdown;
+    }
+
+    public WebElement getCreateSubtaskOption() {
+        return createSubtaskOption;
     }
 
     public void validateIssueBase(String issueSummary) {
