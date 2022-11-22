@@ -81,6 +81,6 @@ public class IssuePage {
     }
 
     public void clickOnEditButton() {
-        editButton.click();
+        Util.lookUpWebElementWithWait(driver, editButton).click();
     }
 }
