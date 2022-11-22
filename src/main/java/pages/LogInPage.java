@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import util.ReadFromConfig;
 import util.Util;
 
 public class LogInPage {
@@ -53,17 +54,9 @@ public class LogInPage {
 
 
     public void logInWithUser(String url, String username, String password) {
-        Util.navigateToUrl(url);
-        this.setUsernameInput(username);
-        this.setPasswordInput(password);
-        this.clickOnLoginButton();
-        Util.lookUpWebElementWithWait(driver, dashboardPage.getUserProfileElement());
-    }
-
-    public void logInWithIncorrectUser(String url, String username, String password) {
-        Util.navigateToUrl(url);
-        this.setUsernameInput(username);
-        this.setPasswordInput(password);
+        Util.navigateToUrl(ReadFromConfig.readFromFile(url));
+        this.setUsernameInput(ReadFromConfig.readFromFile(username));
+        this.setPasswordInput(ReadFromConfig.readFromFile(password));
         this.clickOnLoginButton();
     }
 
