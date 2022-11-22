@@ -34,6 +34,9 @@ public class IssuePage {
     @FindBy(xpath = "//*[@id='delete-issue-submit']")
     WebElement confirmDelete;
 
+    @FindBy(xpath = "//*[@class='stsummary']/a")
+    WebElement subtaskLink;
+
 
     public IssuePage(WebDriver driver) {
         this.driver = driver;
@@ -66,5 +69,10 @@ public class IssuePage {
         deleteButton.click();
         WebElement confirmDeleteButton = Util.lookUpWebElementWithWait(driver, confirmDelete);
         confirmDeleteButton.click();
+    }
+
+    public void validateSubtask(String subtaskSummary){
+        WebElement subtask = Util.lookUpWebElementWithWait(driver, subtaskLink);
+        assertEquals(subtaskSummary, subtask.getText());
     }
 }
