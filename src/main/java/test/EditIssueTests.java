@@ -74,7 +74,7 @@ public class EditIssueTests {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/editIssueTestLinks.csv")
-    public void editCOALAIssueTest(String projectLink){
+    public void editIssueTest(String projectLink){
         try {
             issuePage.checkIfEditButtonIsDisplayed(projectLink);
         }catch (Exception e){
