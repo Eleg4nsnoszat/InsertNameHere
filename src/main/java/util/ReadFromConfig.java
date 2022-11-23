@@ -11,7 +11,7 @@ public class ReadFromConfig {
             FileInputStream fileInputStream = new FileInputStream("config.properties");
             properties.load(fileInputStream);
         }catch (IOException e){
-            System.out.println("SZAR");
+            System.out.println(e);
         }
         return properties.getProperty(data);
     }

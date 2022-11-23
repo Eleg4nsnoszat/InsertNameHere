@@ -4,11 +4,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.DashboardPage;
 import pages.IssuePage;
 import pages.LogInPage;
-import util.ReadFromConfig;
 import util.Util;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -48,33 +51,17 @@ public class BrowseIssueTests {
     }
 
     @Test
-    public void browseExistingIssueTest(){
-        assertEquals("MTP-1", browseProjectIssues("MTP","1"));
-    }
-
-    @Test
     public void browseNonExistingIssueTest(){
         assertNotEquals("MTP-0", browseProjectIssues("MTP","0"));
     }
 
-    @Test
-    public void browseTOUCANIssueTest() {
-        assertEquals("TOUCAN-1", browseProjectIssues("TOUCAN","1"));
-        assertEquals("TOUCAN-2", browseProjectIssues("TOUCAN","2"));
-        assertEquals("TOUCAN-3", browseProjectIssues("TOUCAN","3"));
-    }
-
-    @Test
-    public void browseJETIIssueTest() {
-        assertEquals("JETI-1", browseProjectIssues("JETI","1"));
-        assertEquals("JETI-2", browseProjectIssues("JETI","2"));
-        assertEquals("JETI-3", browseProjectIssues("JETI","3"));
-    }
-
-    @Test
-    public void browseCOALAIssueTest() {
-        assertEquals("COALA-1", browseProjectIssues("COALA","1"));
-        assertEquals("COALA-2", browseProjectIssues("COALA","2"));
-        assertEquals("COALA-3", browseProjectIssues("COALA","3"));
+    @ParameterizedTest
+    @CsvFileSource(resources = "/browseIssuesTestData.csv", numLinesToSkip = 1)
+    public void browseIssueTest(String expProjectName, String projectName, String issueNumber) throws IOException{
+        try {
+            assertEquals(expProjectName, browseProjectIssues(projectName,issueNumber));
+        }catch (Exception e){
+            System.out.println("ERROR: There is no such issue");
+        }
     }
 }

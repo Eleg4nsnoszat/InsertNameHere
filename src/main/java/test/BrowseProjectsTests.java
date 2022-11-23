@@ -4,10 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.DashboardPage;
 import pages.LogInPage;
 import pages.ProjectSummaryPage;
-import util.ReadFromConfig;
 import util.Util;
 
 
@@ -47,9 +48,10 @@ public class BrowseProjectsTests {
         Util.quitBrowser();
     }
 
-    @Test
-    public void browseMTPProjectTest(){
-        checkProjectSummaryPage("MTP");
+    @ParameterizedTest
+    @CsvFileSource(resources = "/browseProjectTestData.csv")
+    public void browseProjectTest(String projectName){
+        checkProjectSummaryPage(projectName);
     }
 
     @Test
@@ -57,20 +59,5 @@ public class BrowseProjectsTests {
         Util.navigateToUrl("https://jira-auto.codecool.metastage.net/projects/DUCK/summary");
         String nonExistingProjectPage = projectSummaryPage.getCannotViewProjectMessage();
         assertEquals("You can't view this project", nonExistingProjectPage);
-    }
-
-    @Test
-    public void checkCOALAProjectDetailsTest(){
-        checkProjectSummaryPage("COALA");
-    }
-
-    @Test
-    public void checkTOUCANProjectDetailsTest(){
-        checkProjectSummaryPage("TOUCAN");
-    }
-
-    @Test
-    public void checkJETIProjectDetailsTest(){
-        checkProjectSummaryPage("JETI");
     }
 }

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.*;
 import util.Util;
 
@@ -70,18 +72,13 @@ public class EditIssueTests {
         assertEquals("Edited-sub", issuePage.getIssueSummaryHeader().getText());
     }
 
-    @Test
-    public void editCOALAIssueTest(){
-        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/COALA/issues/COALA-180?filter=allissues");
-    }
-
-    @Test
-    public void editTOUCANIssueTest(){
-        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/TOUCAN/issues/TOUCAN-239?filter=allissues");
-    }
-
-    @Test
-    public void editJETIIssueTest(){
-        issuePage.checkIfEditButtonIsDisplayed("https://jira-auto.codecool.metastage.net/projects/JETI/issues/JETI-123?filter=allissues");
+    @ParameterizedTest
+    @CsvFileSource(resources = "/editIssueTestLinks.csv")
+    public void editCOALAIssueTest(String projectLink){
+        try {
+            issuePage.checkIfEditButtonIsDisplayed(projectLink);
+        }catch (Exception e){
+            System.out.println("ERROR: There is no edit button displayed");
+        }
     }
 }
