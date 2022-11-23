@@ -18,14 +18,17 @@ public class LogInPage {
     @FindBy(xpath = "//input[@id='login-form-password']")
     WebElement passwordInput;
 
-    @FindBy(xpath = "//input[@id='login']")
+    @FindBy(xpath = "//input[@id='login-form-submit']")
     WebElement loginButton;
 
-    @FindBy(xpath = "//*[@id='usernameerror']/child::p")
+    @FindBy(xpath = "//*[@class='aui-message aui-message-error']/child::p")
     WebElement logInErrorMessage;
 
-    @FindBy(xpath = "//*[@id='login-form-captcha']")
+    @FindBy(xpath = "//*[@id='login-form-os-captcha']")
     WebElement captchaInput;
+
+    @FindBy(xpath = "//img[@class='captcha-image']")
+    WebElement captchaImage;
 
 
 
@@ -66,5 +69,9 @@ public class LogInPage {
 
     public WebElement getCaptchaInput() {
         return Util.lookUpWebElementWithWait(driver, captchaInput);
+    }
+
+    public WebElement getCaptchaImage() {
+        return Util.lookUpWebElementWithWait(driver, captchaImage);
     }
 }

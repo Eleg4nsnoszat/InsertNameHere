@@ -105,6 +105,7 @@ public class LogInTests {
         assertEquals(Util.captchaErrorMessage, alertMessage);
 
         assertTrue(logInPage.getCaptchaInput().isDisplayed());
+        assertTrue(logInPage.getCaptchaImage().isDisplayed());
     }
 
     @Test
