@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -94,8 +93,7 @@ public class CreateIssuePage {
         Util.lookUpWebElementWithWait(driver, cancelButton).click();
 
         // Handling Alert modal
-        Alert alert = driver.switchTo().alert();
-        alert.accept();
+        Util.acceptAlert();
 
         // Get issue header text to validate that no new issue is created
         Util.lookUpWebElementWithWait(driver, dashboardPage.getIssuesOption()).click();
