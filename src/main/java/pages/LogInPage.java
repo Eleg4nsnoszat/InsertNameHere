@@ -21,7 +21,7 @@ public class LogInPage {
     @FindBy(xpath = "//input[@id='login-form-submit']")
     WebElement loginButton;
 
-    @FindBy(xpath = "//*[@class='aui-message aui-message-error']/child::p")
+    @FindBy(xpath = "//*[0@class='aui-message aui-message-error']/child::p")
     WebElement logInErrorMessage;
 
     @FindBy(xpath = "//*[@id='login-form-os-captcha']")
